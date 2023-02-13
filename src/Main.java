@@ -1,5 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        Attribute Strength = new Attribute(12,"Strength", false);
+
+        System.out.println(Strength);
     }
 }

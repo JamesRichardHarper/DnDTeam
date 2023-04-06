@@ -5,8 +5,11 @@ public class Actor {
     String Name;
 
     //Stats - Strength beats knowledge, knowledge beats willpower, willpower beats strength
-    AbilityModifier Health;
-    AbilityModifier Stamina;
+    AbilityModifier health;
+    AbilityModifier stamina;
+    AbilityModifier strength;
+    AbilityModifier knowledge;
+    AbilityModifier willpower;
 
 
 }

@@ -1,3 +1,5 @@
+package Innates;
+
 public abstract class AbilityModifier extends AbilityScore{
 
     int baseAbilityModifier = 0;

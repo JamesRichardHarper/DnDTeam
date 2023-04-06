@@ -1,3 +1,5 @@
+package Innates;
+
 public abstract class AbilityScore {
     int baseAbilityScore = 0;
     int modifiedAbilityScore= 0;

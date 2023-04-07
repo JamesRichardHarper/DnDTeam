@@ -1,8 +1,13 @@
+import UI.Input;
+import UI.Pages;
+
 public class Main {
     public static void main(String[] args) {
+        Boolean isOn = true;
 
-        Attribute Strength = new Attribute(12,"Strength", false);
+        while(isOn){
+            isOn = Pages.getInstance().openingPage(isOn);
+        }
 
-        System.out.println(Strength);
     }
 }

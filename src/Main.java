@@ -1,8 +1,20 @@
 public class Main {
     public static void main(String[] args) {
+        Input.getInstance();
 
-        Attribute Strength = new Attribute(12,"Strength", false);
+        Boolean isOn = true;
 
-        System.out.println(Strength);
+        while(isOn){
+            System.out.println("Hello, would you like to quit?");
+            String keyboardInput = Input.getInstance().readString();
+            if (keyboardInput.toUpperCase().equalsIgnoreCase("Y")){
+                isOn = false;
+            }
+            else{
+                System.out.println("Want to try that again?");
+            }
+        }
+
+
     }
 }

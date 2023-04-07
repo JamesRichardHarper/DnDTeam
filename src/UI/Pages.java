@@ -30,6 +30,9 @@ public final class Pages {
                                 isOn = false;
                                 break;
                         }
+                        default:{
+                                System.out.println("Please input a valid number.");
+                        }
                 }
 
                 return isOn;

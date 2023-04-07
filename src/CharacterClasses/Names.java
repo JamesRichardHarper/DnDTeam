@@ -1,3 +1,5 @@
+package CharacterClasses;
+
 public enum Names {
     ABEL("Abel"),
     BEATRICE("Beatrice"),

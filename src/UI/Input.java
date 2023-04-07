@@ -1,23 +1,15 @@
+package UI;
+
 import java.util.Scanner;
 
 public class Input {
-    private static Input instance = new Input();
-    private Scanner keyboardInput = new Scanner(System.in);
+    private static final Scanner keyboardInput = new Scanner(System.in);
 
-    private Input(){}
-
-    public static Input getInstance(){
-        if (instance == null){
-            instance = new Input();
-        }
-        return instance;
-    }
-
-    public String readString(){
+    public static String readString(){
         return keyboardInput.nextLine();
     }
 
-    public int readInt(){
+    public static int readInt(){
         int value = 0;
         boolean valid = false;
 
@@ -29,7 +21,6 @@ public class Input {
                 System.out.println("Not a valid value. Please input a number");
             }
         }
-
         return value;
 
     }

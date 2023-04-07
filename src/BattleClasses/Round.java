@@ -1,3 +1,5 @@
+package BattleClasses;
+
 public class Round {
     //Grabs the opposing player, or the attacked
     //Identies the stat the player has used and the according value

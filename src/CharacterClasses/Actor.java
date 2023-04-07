@@ -1,3 +1,5 @@
+package CharacterClasses;
+
 import Innates.AbilityModifier;
 import Innates.AbilityScore;
 
@@ -49,7 +51,7 @@ public class Actor {
 
     @Override
     public String toString() {
-        return "Actor Class \n " +
+        return "CharacterClasses.Actor Class \n " +
                 "Name: " + getName() + "\n" +
                 "Health: " + health.getBaseAbilityScore() + "\n" +
                 "Stamina: " + stamina.getBaseAbilityScore() + "\n" +

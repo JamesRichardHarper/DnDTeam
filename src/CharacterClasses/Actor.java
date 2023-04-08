@@ -2,6 +2,8 @@ package CharacterClasses;
 
 import Innates.AbilityModifier;
 import Innates.AbilityScore;
+import Innates.Attribute;
+import Innates.TotalAbility;
 
 public class Actor {
 
@@ -9,18 +11,18 @@ public class Actor {
     AbilityModifier activeStat;
 
     //Stats - Strength beats knowledge, knowledge beats willpower, willpower beats strength
-    AbilityScore health;
-    AbilityScore stamina;
-    AbilityModifier strength;
-    AbilityModifier knowledge;
-    AbilityModifier willpower;
+    Attribute health;
+    Attribute stamina;
+    TotalAbility strength;
+    TotalAbility knowledge;
+    TotalAbility willpower;
 
     public Actor(String name,
-                 AbilityScore health,
-                 AbilityScore stamina,
-                 AbilityModifier strength,
-                 AbilityModifier knowledge,
-                 AbilityModifier willpower) {
+                 Attribute health,
+                 Attribute stamina,
+                 TotalAbility strength,
+                 TotalAbility knowledge,
+                 TotalAbility willpower) {
 
         Name = name;
         this.health = health;
@@ -51,12 +53,11 @@ public class Actor {
 
     @Override
     public String toString() {
-        return "CharacterClasses.Actor Class \n " +
-                "Name: " + getName() + "\n" +
-                "Health: " + health.getBaseAbilityScore() + "\n" +
-                "Stamina: " + stamina.getBaseAbilityScore() + "\n" +
+        return "Name: " + getName() + "\n" +
+                "Health: " + health.getBaseAbilityScore() + "(" + health.getRegenerate() + " per round) \n" +
+                "Stamina: " + stamina.getBaseAbilityScore() + "(" + stamina.getRegenerate() + " per round) \n" +
                 "Strength: " + strength.getBaseAbilityScore() + "(Score) + " + strength.getBaseAbilityModifier() + "(Mod) \n" +
                 "Knowledge: " + knowledge.getBaseAbilityScore() + "(Score) + " + knowledge.getBaseAbilityModifier() + "(Mod) \n" +
-                "Willpower: " + willpower.getBaseAbilityScore() + "(Score) + " + willpower.getBaseAbilityModifier() + "(Mod)";
+                "Willpower: " + willpower.getBaseAbilityScore() + "(Score) + " + willpower.getBaseAbilityModifier() + "(Mod) \n";
     }
 }

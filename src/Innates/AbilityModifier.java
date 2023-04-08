@@ -5,6 +5,10 @@ public abstract class AbilityModifier extends AbilityScore{
     int baseAbilityModifier = 0;
     int modifiedAbilityModifier = 0;
 
+    public AbilityModifier(){
+        super();
+    }
+
     public AbilityModifier(int baseAbilityScore) {
         super(baseAbilityScore);
         this.baseAbilityModifier = (baseAbilityScore-10)/2;

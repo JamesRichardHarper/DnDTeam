@@ -30,11 +30,28 @@ public abstract class AbilityScore {
         this.baseAbilityScore = baseAbilityScore;
     }
 
-    public void modifyScore(int modifier){
-        setModifiedAbilityScore(getModifiedAbilityScore() + modifier);
-    }
-
     public void resetScore(){
         setModifiedAbilityScore(getBaseAbilityScore());
+    }
+
+    public Boolean modifyAbility(int changeAmount, Boolean improve){
+        if (improve){
+            if((changeAmount + getModifiedAbilityScore()) > (getModifiedAbilityScore())){
+                setModifiedAbilityScore(getBaseAbilityScore());
+            }
+            else{
+                setModifiedAbilityScore(getModifiedAbilityScore() + changeAmount);
+            }
+            return true;
+        }
+        else{
+            if (getModifiedAbilityScore() > changeAmount) {
+                setModifiedAbilityScore(getModifiedAbilityScore() + changeAmount);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 }

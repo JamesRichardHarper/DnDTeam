@@ -5,12 +5,18 @@ import Innates.AbilityScore;
 import Innates.Attribute;
 import Innates.TotalAbility;
 
-public class Actor {
+import java.util.ArrayList;
+import java.util.Random;
 
-    String Name;
+public class Actor {
+    Random random = new Random();
+
+    //Innates
+    Boolean alive;
+    Boolean playerControlled;
+    String name;
     AbilityModifier activeStat;
 
-    //Stats - Strength beats knowledge, knowledge beats willpower, willpower beats strength
     Attribute health;
     Attribute stamina;
     TotalAbility strength;
@@ -23,8 +29,9 @@ public class Actor {
                  TotalAbility strength,
                  TotalAbility knowledge,
                  TotalAbility willpower) {
-
-        Name = name;
+        alive = true;
+        playerControlled = false;
+        this.name = name;
         this.health = health;
         this.stamina = stamina;
         this.strength = strength;
@@ -34,21 +41,65 @@ public class Actor {
 
     //Getters & Setters
     public String getName() {
-        return Name;
+        return name;
     }
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
-    public void setActiveStat(AbilityModifier activeStat) {
+    public void setActiveStat(TotalAbility activeStat) {
         this.activeStat = activeStat;
+    }
+    public Boolean getAlive() {
+        return alive;
+    }
+    public void setAlive(Boolean alive) {
+        this.alive = alive;
+    }
+    public Boolean getPlayerControlled() {
+        return playerControlled;
+    }
+    public void setPlayerControlled(Boolean playerControlled) {
+        this.playerControlled = playerControlled;
+    }
+    public String getActiveStat() {
+        return activeStat.getClass().getName();
+    }
+    public int getHealth() {
+        return health.getModifiedAbilityScore();
+    }
+    public int getStamina() {
+        return stamina.getModifiedAbilityScore();
     }
 
     //Attack Methods
     //Set attacking stat
     //Send Stat used
-    public AbilityModifier attackPlayer(AbilityModifier statUsed){
+    public TotalAbility attackWithStat(TotalAbility statUsed){
         setActiveStat(statUsed);
         return statUsed;
+    }
+
+    public TotalAbility attackWithStat(){
+        TotalAbility statUsed = getRandomAbility();
+        setActiveStat(statUsed);
+        return statUsed;
+    }
+
+    public TotalAbility getRandomAbility(){
+        ArrayList<TotalAbility> abilityList = new ArrayList<>();
+        abilityList.add(strength);
+        abilityList.add(knowledge);
+        abilityList.add(willpower);
+        int chance = random.nextInt(abilityList.size());
+        return abilityList.get(chance);
+    }
+
+    public void takeDamage(int damage){
+        setAlive(health.modifyAbility(damage, false));
+    }
+
+    public void healDamage(int heal){
+        health.modifyAbility(heal, true);
     }
 
     @Override

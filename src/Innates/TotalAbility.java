@@ -5,7 +5,7 @@ public class TotalAbility extends AbilityModifier{
 
     public TotalAbility(){
         super();
-        this.name = "Unnamed";
+        this.name = "Unnamed Ability";
     }
 
     public TotalAbility(int baseAbilityScore, String name) {
@@ -15,5 +15,9 @@ public class TotalAbility extends AbilityModifier{
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String newName){
+        this.name = newName;
     }
 }

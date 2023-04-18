@@ -1,5 +1,7 @@
 package UI;
 
+import BattleClasses.FightBattle;
+import BattleClasses.FightGame;
 import CharacterClasses.Actor;
 import CharacterClasses.RandomActor;
 
@@ -24,7 +26,11 @@ public final class Pages {
                 switch(input){
                         //Play
                         case(1):{
-                                System.out.println("Implementation coming soon!");
+                                FightBattle need2fite = new FightBattle();
+                                RandomActor needAnActor = new RandomActor();
+                                Actor randomPersonOne = needAnActor.createChar();
+                                Actor randomPersonTwo = needAnActor.createChar();
+                                need2fite.beginFight(randomPersonOne, randomPersonTwo);
                                 break;
                         }
                         //Create Random Person

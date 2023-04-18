@@ -5,6 +5,7 @@ import Innates.Attribute;
 import Innates.TotalAbility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class RandomActor {
@@ -12,20 +13,18 @@ public class RandomActor {
     Random random = new Random();
 
     public Actor createChar(){
-        Actor newActor = new
+        TotalAbility[] randomAbilities = bulkGenerateStats();
+        return new
                 Actor(getRandomName(),
                 generateRandomAttribute("Health"),
                 generateRandomAttribute("Stamina"),
-                generateTotalAbility("Strength"),
-                generateTotalAbility("Knowledge"),
-                generateTotalAbility("Willpower"));
-
-        return newActor;
+                randomAbilities[0],
+                randomAbilities[1],
+                randomAbilities[2]);
     }
 
     public String getRandomName(){
-        String nameRandom = Names.values()[random.nextInt(Names.values().length)].getName();
-        return nameRandom;
+        return Names.values()[random.nextInt(Names.values().length)].getName();
     }
 
     public Attribute generateRandomAttribute(String name){
@@ -34,22 +33,39 @@ public class RandomActor {
         int regenSmallBound = 1;
         int regenLargeBound = 3;
 
-        Attribute attribute = new Attribute(
+        return new Attribute(
                 random.nextInt(capacityLargeBound-capacitySmallBound) + capacitySmallBound,
                 random.nextInt(regenLargeBound-regenSmallBound) + regenSmallBound,
                 name);
-
-        return attribute;
     }
 
     public TotalAbility generateTotalAbility(String name){
-        int skillRole =
-                random.nextInt(7) +
-                random.nextInt(7) +
-                random.nextInt(7);
+        int[] skillRoles = new int[4];
+        for (int index = 0; index <= (skillRoles.length - 1); index++) {
+            skillRoles[index] = random.nextInt(6) + 1;
+        }
+        Arrays.sort(skillRoles);
+        return new TotalAbility(skillRoles[1]+ skillRoles[2]+skillRoles[3], name);
+    }
 
-        TotalAbility newAbility = new TotalAbility(skillRole, name);
+    public TotalAbility[] bulkGenerateStats(){
 
-        return newAbility;
+        String[] abilitiesNeeded = {"Strength", "Knowledge", "Willpower"};
+        TotalAbility[] abilityList = new TotalAbility[3];
+        int index = 0;
+
+        for (String ability : abilitiesNeeded) {
+            boolean positiveAbility = false;
+
+            while(!positiveAbility){
+                TotalAbility newAbility = generateTotalAbility(ability);
+                if (newAbility.getModifiedAbilityModifier() > -1){
+                    abilityList[index] = newAbility;
+                    positiveAbility = true;
+                    index++;
+                }
+            }
+        }
+        return abilityList;
     }
 }

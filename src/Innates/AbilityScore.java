@@ -36,7 +36,7 @@ public abstract class AbilityScore {
 
     public Boolean modifyAbility(int changeAmount, Boolean improve){
         if (improve){
-            if((changeAmount + getModifiedAbilityScore()) > (getModifiedAbilityScore())){
+            if((changeAmount + getModifiedAbilityScore()) > (getBaseAbilityScore())){
                 setModifiedAbilityScore(getBaseAbilityScore());
             }
             else{
@@ -45,8 +45,8 @@ public abstract class AbilityScore {
             return true;
         }
         else{
-            if (getModifiedAbilityScore() > changeAmount) {
-                setModifiedAbilityScore(getModifiedAbilityScore() + changeAmount);
+            setModifiedAbilityScore(getModifiedAbilityScore() - changeAmount);
+            if (getModifiedAbilityScore() > 0) {
                 return true;
             }
             else {

@@ -15,7 +15,7 @@ public class Actor {
     Boolean alive;
     Boolean playerControlled;
     String name;
-    AbilityModifier activeStat;
+    TotalAbility activeStat;
 
     Attribute health;
     Attribute stamina;
@@ -61,8 +61,8 @@ public class Actor {
     public void setPlayerControlled(Boolean playerControlled) {
         this.playerControlled = playerControlled;
     }
-    public String getActiveStat() {
-        return activeStat.getClass().getName();
+    public TotalAbility getActiveStat() {
+        return activeStat;
     }
     public int getHealth() {
         return health.getModifiedAbilityScore();
@@ -87,10 +87,16 @@ public class Actor {
 
     public TotalAbility getRandomAbility(){
         ArrayList<TotalAbility> abilityList = new ArrayList<>();
-        abilityList.add(strength);
-        abilityList.add(knowledge);
-        abilityList.add(willpower);
-        int chance = random.nextInt(abilityList.size());
+        if (strength.getModifiedAbilityModifier()>-1){
+            abilityList.add(strength);
+        }
+        if (strength.getModifiedAbilityModifier()>-1){
+            abilityList.add(knowledge);
+        }
+        if (strength.getModifiedAbilityModifier()>-1){
+            abilityList.add(willpower);
+        }
+        int chance = random.nextInt(abilityList.size()-1);
         return abilityList.get(chance);
     }
 

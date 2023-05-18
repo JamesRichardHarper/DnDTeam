@@ -3,6 +3,7 @@ package UI;
 import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
+import Settings.SettingsMenu;
 
 public final class Pages {
         boolean isOn;
@@ -36,6 +37,11 @@ public final class Pages {
                         //Create Person
                         case (2) -> {
                                 characterPage();
+                        }
+
+                        //Settings
+                        case (8) -> {
+                                settingsPage();
                         }
 
                         //Exit
@@ -72,6 +78,28 @@ public final class Pages {
                 }
 
                 System.out.println(activeCharacter);
+
+        }
+
+        public void settingsPage(){
+                SettingsMenu settings = new SettingsMenu();
+                BulkText.printSettingsPage(settings.getSetting("Save_Location"));
+                int inputCharacter = Input.readInt();
+
+                switch(inputCharacter){
+                        case(1) -> {
+                                System.out.println("Enter New Location");
+                                String newPathLocation = Input.readString();
+                                settings.updateSetting("Save_Location",
+                                        newPathLocation);
+                        }
+                        case(9) -> {
+                                System.out.println("Backing out.");
+                        }
+                        default -> {
+                                System.out.println("Please input a valid number.");
+                        }
+                }
         }
 
         /*public void templatePage(){

@@ -53,5 +53,15 @@ public class BulkText {
                 variableNeeded);
     }
 
+    public static void printSettingsPage(String saveLocation){
+        System.out.printf("""
+                Settings
+                Save Location: %s
+                [1] Change Save Location
+                [9] Return
+                """,
+                saveLocation
+        );
+    }
 
 }

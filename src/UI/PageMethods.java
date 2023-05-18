@@ -3,6 +3,7 @@ package UI;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
 import Innates.Attribute;
+import Innates.TotalAbility;
 
 public class PageMethods {
     public static boolean randomNameCheck(){
@@ -27,7 +28,7 @@ public class PageMethods {
     }
 
     public static boolean randomCharacterCheck(){
-        BulkText.printRandomNamePage();
+        BulkText.printCharacterPage();
         int inputCharacter = Input.readInt();
 
         switch (inputCharacter) {
@@ -47,37 +48,32 @@ public class PageMethods {
         }
     }
 
-    public static String getVariableName(String variableNeeded){
-        BulkText.printCustomVariable(variableNeeded);
-        return Input.readString();
-    }
-
-    public static int getVariableInt(String variableNeeded){
-        BulkText.printCustomVariable(variableNeeded);
-        return Input.readInt();
-    }
-
     public static Attribute generateUserAttribute(String Name){
-        return
+        return ActorGeneration.generateAttribute(
+                BulkText.getVariableInt("$Name Capacity"),
+                BulkText.getVariableInt("$Name Regeneration"),
+                Name);
     }
 
-    public static Actor createCustomActor() {
-        ActorGeneration needAnActor = new ActorGeneration();
-        return needAnActor.createChar(
-                PageMethods.getVariableName("Name"),
-                needAnActor.generateAttribute(
-                        getVariableInt("Health Pool"),
-                        getVariableInt("Health Regeneration"),
-                        "Health"),
-                needAnActor.generateAttribute(
-                        getVariableInt("Stamina Pool"),
-                        getVariableInt("Stamina Regeneration"),
-                        getVariableName("Stamina")),
-                needAnActor.generateTotalAbility(
-                        "Strength",
-                        getVariableInt("Strength")
-                ),
-                getVariableInt("Knowledge"),
-                getVariableInt("Willpower"));
+    public static TotalAbility generateUserAbility(String Name){
+        return ActorGeneration.generateTotalAbility(
+                Name,
+                BulkText.getVariableInt("$Name Score"));
+    }
+
+    public static Actor createUserActor() {
+        return createUserActor(
+                BulkText.getVariableString("Name")
+        );
+    }
+
+    public static Actor createUserActor(String randomName) {
+        return ActorGeneration.createChar(
+                randomName,
+                generateUserAttribute("Health"),
+                generateUserAttribute("Stamina"),
+                generateUserAbility("Strength"),
+                generateUserAbility("Knowledge"),
+                generateUserAbility("Willpower"));
     }
 }

@@ -8,15 +8,15 @@ import java.util.Random;
 
 public class ActorGeneration {
 
-    Random random = new Random();
+    static Random random = new Random();
 
     //Completely Random Character
-    public Actor createChar(){
+    public static Actor createChar(){
         return createChar(getRandomName());
     }
 
     //Random but with user Character name
-    public Actor createChar(String name){
+    public static Actor createChar(String name){
         TotalAbility[] randomAbilities = bulkGenerateStats();
         return createChar(name,
                 generateAttribute("Health"),
@@ -27,7 +27,7 @@ public class ActorGeneration {
     }
 
     //Base Create, fully customizable
-    public Actor createChar(String name,
+    public static Actor createChar(String name,
                             Attribute health,
                             Attribute stamina,
                             TotalAbility strength,
@@ -41,15 +41,15 @@ public class ActorGeneration {
                 wisdom);
     }
 
-    public String getRandomName(){
+    public static String getRandomName(){
         return Names.values()[random.nextInt(Names.values().length)].getName();
     }
 
-    public Attribute generateAttribute(int capacity, int regenAmount,String name){
+    public static Attribute generateAttribute(int capacity, int regenAmount,String name){
         return new Attribute(capacity, regenAmount, name);
     }
 
-    public Attribute generateAttribute(String name){
+    public static Attribute generateAttribute(String name){
         int capacitySmallBound = 10;
         int capacityLargeBound = 20;
         int regenSmallBound = 1;
@@ -61,11 +61,11 @@ public class ActorGeneration {
                 name);
     }
 
-    public TotalAbility generateTotalAbility(String name, int totalScore){
+    public static TotalAbility generateTotalAbility(String name, int totalScore){
         return new TotalAbility(totalScore, name);
     }
 
-    public TotalAbility generateTotalAbility(String name){
+    public static TotalAbility generateTotalAbility(String name){
         int[] skillRoles = new int[3];
         for (int index = 0; index <= (skillRoles.length - 1); index++) {
             skillRoles[index] = random.nextInt(6) + 1;
@@ -78,7 +78,7 @@ public class ActorGeneration {
                 name);
     }
 
-    public TotalAbility[] bulkGenerateStats(){
+    public static TotalAbility[] bulkGenerateStats(){
 
         String[] abilitiesNeeded = {"Strength", "Knowledge", "Willpower"};
         TotalAbility[] abilityList = new TotalAbility[3];

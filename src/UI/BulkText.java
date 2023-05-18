@@ -1,5 +1,7 @@
 package UI;
 public class BulkText {
+
+    //Hard Coded Text
     public static void printIntroduction(){
         System.out.println("""
                 Greetings!\s
@@ -22,8 +24,7 @@ public class BulkText {
                 Okay!\s
                 Do you want to generate a random character, or create one yourself?\s
                 [1] Random\s
-                [2] Create\s
-                [9] Return""");
+                [2] Create\s""");
     }
 
     public static void printRandomNamePage(){
@@ -34,9 +35,23 @@ public class BulkText {
                 [2] Yes""");
     }
 
-    public static void printCustomVariable(String variableNeeded){
-        System.out.println("""
-                Okay!\s
-                Please enter the $variableNeeded wanted for this character.""");
+    //Formatted Text
+    public static String getVariableString(String variableNeeded){
+        BulkText.printCustomVariable(variableNeeded);
+        return Input.readString();
     }
+
+    public static int getVariableInt(String variableNeeded){
+        BulkText.printCustomVariable(variableNeeded);
+        return Input.readInt();
+    }
+
+    public static void printCustomVariable(String variableNeeded){
+        System.out.printf("""
+                Okay!\s
+                Please enter the %s wanted for this character. %n""",
+                variableNeeded);
+    }
+
+
 }

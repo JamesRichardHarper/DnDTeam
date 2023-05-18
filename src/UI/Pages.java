@@ -28,9 +28,8 @@ public final class Pages {
                         //Play
                         case (1) -> {
                                 FightBattle need2fite = new FightBattle();
-                                ActorGeneration needAnActor = new ActorGeneration();
-                                Actor randomPersonOne = needAnActor.createChar();
-                                Actor randomPersonTwo = needAnActor.createChar();
+                                Actor randomPersonOne = ActorGeneration.createChar();
+                                Actor randomPersonTwo = ActorGeneration.createChar();
                                 need2fite.beginFight(randomPersonOne, randomPersonTwo);
                         }
 
@@ -54,58 +53,25 @@ public final class Pages {
         }
 
         public void characterPage() {
-                ActorGeneration needAnActor = new ActorGeneration();
                 boolean randomName = PageMethods.randomNameCheck();
                 boolean randomChar = PageMethods.randomCharacterCheck();
                 Actor activeCharacter;
 
-                BulkText.printCharacterPage();
-                int inputCharacter = Input.readInt();
-
-                randomName? (
-                        randomChar? (
-                                activeCharacter = needAnActor.createChar()
-                        ) : (
-                                activeCharacter = needAnActor.createChar(PageMethods.getVariableName("Name"))
-                )
-                ) : (   randomChar? (
-                                activeCharacter = needAnActor.
-                        ) : (
-                                activeCharacter = needAnActor.createChar(
-                                        PageMethods.getVariableName("Name"),
-                                        getVariableInt("Health"),
-                                        getVariableInt("Stamina"),
-                                        getVariableInt("Strength"),
-                                        getVariableInt("Knowledge"),
-                                        getVariableInt("Willpower")
-                                )
-                        ));
-
-                switch (inputCharacter) {
-                        //Create Random
-                        case (1) -> {
-                                if (randomName){
-                                        Actor newCharacter = needAnActor.createChar(needAnActor.getRandomName());
-                                }
-                                else{
-                                        Actor newCharacter = needAnActor.createChar();
-                                }
+                if (randomName) {
+                        if (randomChar) { //Random Name w/ random character
+                                activeCharacter = ActorGeneration.createChar();
+                        } else { //Random Name w/ custom character
+                                activeCharacter = PageMethods.createUserActor(ActorGeneration.getRandomName());
                         }
-
-                        //Create Non-Random Person
-                        case (2) -> {
-                                Actor randomPerson = needAnActor.createChar();
-                                System.out.println("\n" + randomPerson.toString());
-                        }
-
-                        //Exit
-                        case (9) -> {
-                                System.out.println("Goodbye!");
-                        }
-                        default -> {
-                                System.out.println("Please input a valid number.");
+                } else {
+                        if (randomChar) { //Custom Name w/ random character
+                                activeCharacter = ActorGeneration.createChar(BulkText.getVariableString("Name"));
+                        } else { //Custom Name w/ custom character
+                                activeCharacter = PageMethods.createUserActor();
                         }
                 }
+
+                System.out.println(activeCharacter);
         }
 
         /*public void templatePage(){

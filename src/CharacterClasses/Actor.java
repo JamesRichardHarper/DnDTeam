@@ -1,7 +1,5 @@
 package CharacterClasses;
 
-import Innates.AbilityModifier;
-import Innates.AbilityScore;
 import Innates.Attribute;
 import Innates.TotalAbility;
 
@@ -15,7 +13,7 @@ public class Actor {
     Boolean alive;
     Boolean playerControlled;
     String name;
-    TotalAbility activeStat;
+    public TotalAbility activeStat;
 
     Attribute health;
     Attribute stamina;

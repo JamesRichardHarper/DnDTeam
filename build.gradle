@@ -17,4 +17,5 @@ sourceSets {
 }
 dependencies {
     implementation 'junit:junit:4.13.2'
+    implementation 'org.jetbrains:annotations:20.1.0'
 }

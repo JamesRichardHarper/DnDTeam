@@ -6,6 +6,7 @@ import CharacterClasses.ActorGeneration;
 import Settings.SettingsMenu;
 
 public final class Pages {
+        SettingsMenu settings = new SettingsMenu();
         boolean isOn;
         private static Pages instance;
 
@@ -82,7 +83,6 @@ public final class Pages {
         }
 
         public void settingsPage(){
-                SettingsMenu settings = new SettingsMenu();
                 BulkText.printSettingsPage(settings.getSetting("Save_Location"));
                 int inputCharacter = Input.readInt();
 

@@ -8,6 +8,7 @@ public class BulkText {
                 What is it you would like to do?\s
                 [1] Play\s
                 [2] Create Random Character\s
+                [8] Settings\s
                 [9] Quit""");
     }
 

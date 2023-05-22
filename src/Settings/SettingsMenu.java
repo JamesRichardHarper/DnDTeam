@@ -1,15 +1,23 @@
 package Settings;
 
 import java.io.*;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class SettingsMenu {
-        private static final String PROPERTIES_FILE = "Settings.properties";
+        FileSystem fileSystem = FileSystems.getDefault();
+        private final String SETTINGS_NAME = "src\\Assets\\Settings.properties";
+        private final Path ROOT_PATH = fileSystem.getPath("").toAbsolutePath();
+        private final String PROPERTIES_FILE = String.format("%1$s/%2$s", ROOT_PATH,SETTINGS_NAME);
         private Properties properties;
 
         public SettingsMenu(){
                 properties = new Properties();
                 loadProperties();
+                System.out.println(PROPERTIES_FILE);
         }
 
         private void loadProperties() {

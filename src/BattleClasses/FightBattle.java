@@ -28,9 +28,9 @@ public class FightBattle {
     public void beginFight(Actor playerOne, Actor playerTwo){
         System.out.println(
                 "Welcome to battle. \n" +
-                "Today we have:\n" + playerOne.getName() + " (" + playerOne.getHealth() + ")\n" +
+                "Today we have:\n" + playerOne.getName() + " (" + playerOne.getHealth().getModifiedAbilityScore() + ")\n" +
                         "VS. \n" +
-                playerTwo.getName() + " (" + playerTwo.getHealth() + ")\n");
+                playerTwo.getName() + " (" + playerTwo.getHealth().getModifiedAbilityScore() + ")\n");
 
         while(fightOngoing){
             Round round = new Round(playerOne, playerTwo);
@@ -39,9 +39,9 @@ public class FightBattle {
             totalRounds.add(round);
 
             System.out.println(
-                    playerOne.getName() + "(" + playerOne.getHealth() + ") dealt " +
+                    playerOne.getName() + "(" + playerOne.getHealth().getModifiedAbilityScore() + ") dealt " +
                     round.getPlayerOneBaseDamage() + "(x" + round.getPlayerOneMultiplier() + ") " + "\n" +
-                    playerTwo.getName() + "(" + playerTwo.getHealth() + ") dealt " +
+                    playerTwo.getName() + "(" + playerTwo.getHealth().getModifiedAbilityScore() + ") dealt " +
                     round.getPlayerTwoBaseDamage() + "(x" + round.getPlayerTwoMultiplier() + ")\n");
 
             if(totalRounds.size() > 20){

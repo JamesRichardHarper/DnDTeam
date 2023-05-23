@@ -12,6 +12,7 @@ public class WriteReadCharacter {
 
     public static void packActor(Actor userChar, Path saveLocation){
         try(OutputStream outputStream = new FileOutputStream( getTotalPath(saveLocation, getCharFileName(userChar)) )){
+            mapper.writeValueAsString(userChar);
             mapper.writeValue(outputStream, userChar);
         }catch(Exception exception){
             exception.printStackTrace();

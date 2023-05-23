@@ -51,6 +51,27 @@ public class PageMethods {
         }
     }
 
+    public static boolean savingChar(Actor userChar){
+        BulkText.printGeneratedChar(userChar.toString());
+        int inputCharacter = Input.readInt();
+
+        switch (inputCharacter) {
+            //Save character
+            case (1) -> {
+                return true;
+            }
+
+            //Forget
+            case (2) -> {
+                return false;
+            }
+
+            default -> {
+                return randomNameCheck();
+            }
+        }
+    }
+
     public static Attribute generateUserAttribute(String name){
         return ActorGeneration.generateAttribute(
                 BulkText.getVariableInt(String.format("%s capacity", name)),
@@ -84,7 +105,4 @@ public class PageMethods {
         WriteReadCharacter.packActor(userChar, location);
     }
 
-    public static void areWeSaving(){
-        saveActor();
-    }
 }

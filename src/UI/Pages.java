@@ -81,8 +81,9 @@ public final class Pages {
                         }
                 }
 
-                System.out.println(activeCharacter);
-                PageMethods.saveActor(activeCharacter, Paths.get(settings.getSetting("Save_Location")));
+                if(PageMethods.savingChar(activeCharacter)){
+                        PageMethods.saveActor(activeCharacter, Paths.get(settings.getSetting("Save_Location")));
+                }
         }
 
         public void settingsPage(){

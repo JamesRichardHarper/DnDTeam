@@ -13,7 +13,7 @@ public class Actor {
     Boolean alive;
     Boolean playerControlled;
     String name;
-    public TotalAbility activeStat;
+    TotalAbility activeStat;
 
     Attribute health;
     Attribute stamina;

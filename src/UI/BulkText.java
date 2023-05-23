@@ -65,4 +65,17 @@ public class BulkText {
         );
     }
 
+    public static void printGeneratedChar(String charStats){
+        System.out.printf("""
+                Here is your character!
+                -----------------------
+                %s
+                -----------------------
+                Do you wish to save?
+                [1] Yes
+                [2] No
+                """,
+                charStats);
+    }
+
 }

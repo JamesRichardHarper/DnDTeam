@@ -12,18 +12,18 @@ public class SettingsMenu {
         private final Path SETTINGS_NAME = Paths.get("Settings.properties");
         private final Path MIDDLE_FOLDERS = Paths.get("src/Assets/");
         private final Path ROOT_PATH = fileSystem.getPath("").toAbsolutePath();
-        private final String PROPERTIES_FILE = /*String.format("%1$s/%2$s/%3$s", ROOT_PATH,MIDDLE_FOLDERS,SETTINGS_NAME)*/
-                ROOT_PATH.resolve(MIDDLE_FOLDERS.resolve(SETTINGS_NAME)).toString();
+        private final Path PROPERTIES_FILE_PATH = ROOT_PATH.resolve(MIDDLE_FOLDERS.resolve(SETTINGS_NAME));
+        private final String PROPERTIES_FILE_STRING = PROPERTIES_FILE_PATH.toString();
         private Properties properties;
 
         public SettingsMenu(){
                 properties = new Properties();
                 loadProperties();
-                System.out.println(PROPERTIES_FILE);
+                System.out.println(PROPERTIES_FILE_STRING);
         }
 
         private void loadProperties() {
-                try(FileInputStream filePath = new FileInputStream(PROPERTIES_FILE)){
+                try(FileInputStream filePath = new FileInputStream(PROPERTIES_FILE_STRING)){
                         properties.load(filePath);
                 } catch (IOException exception){
                         exception.printStackTrace();
@@ -31,7 +31,7 @@ public class SettingsMenu {
         }
 
         private void saveProperties(){
-                try(FileOutputStream filePath = new FileOutputStream(PROPERTIES_FILE)){
+                try(FileOutputStream filePath = new FileOutputStream(PROPERTIES_FILE_STRING)){
                         properties.store(filePath, "Settings");
                 } catch (IOException exception){
                         exception.printStackTrace();

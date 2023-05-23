@@ -9,9 +9,11 @@ import java.util.Properties;
 
 public class SettingsMenu {
         FileSystem fileSystem = FileSystems.getDefault();
-        private final String SETTINGS_NAME = "src\\Assets\\Settings.properties";
+        private final Path SETTINGS_NAME = Paths.get("Settings.properties");
+        private final Path MIDDLE_FOLDERS = Paths.get("src/Assets/");
         private final Path ROOT_PATH = fileSystem.getPath("").toAbsolutePath();
-        private final String PROPERTIES_FILE = String.format("%1$s/%2$s", ROOT_PATH,SETTINGS_NAME);
+        private final String PROPERTIES_FILE = /*String.format("%1$s/%2$s/%3$s", ROOT_PATH,MIDDLE_FOLDERS,SETTINGS_NAME)*/
+                ROOT_PATH.resolve(MIDDLE_FOLDERS.resolve(SETTINGS_NAME)).toString();
         private Properties properties;
 
         public SettingsMenu(){

@@ -4,10 +4,13 @@ import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
 import Settings.SettingsMenu;
+import Settings.WriteReadCharacter;
+
+import java.nio.file.Paths;
 
 public final class Pages {
-        SettingsMenu settings = new SettingsMenu();
         boolean isOn;
+        SettingsMenu settings = new SettingsMenu();
         private static Pages instance;
 
         private Pages() {
@@ -79,7 +82,7 @@ public final class Pages {
                 }
 
                 System.out.println(activeCharacter);
-
+                PageMethods.saveActor(activeCharacter, Paths.get(settings.getSetting("Save_Location")));
         }
 
         public void settingsPage(){

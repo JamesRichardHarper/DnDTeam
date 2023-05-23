@@ -4,6 +4,9 @@ import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
 import Innates.Attribute;
 import Innates.TotalAbility;
+import Settings.WriteReadCharacter;
+
+import java.nio.file.Path;
 
 public class PageMethods {
     public static boolean randomNameCheck(){
@@ -48,17 +51,17 @@ public class PageMethods {
         }
     }
 
-    public static Attribute generateUserAttribute(String Name){
+    public static Attribute generateUserAttribute(String name){
         return ActorGeneration.generateAttribute(
-                BulkText.getVariableInt("$Name Capacity"),
-                BulkText.getVariableInt("$Name Regeneration"),
-                Name);
+                BulkText.getVariableInt(String.format("%s capacity", name)),
+                BulkText.getVariableInt(String.format("%s regen", name)),
+                name);
     }
 
-    public static TotalAbility generateUserAbility(String Name){
+    public static TotalAbility generateUserAbility(String name){
         return ActorGeneration.generateTotalAbility(
-                Name,
-                BulkText.getVariableInt("$Name Score"));
+                name,
+                BulkText.getVariableInt(String.format("%s Score", name)));
     }
 
     public static Actor createUserActor() {
@@ -75,5 +78,13 @@ public class PageMethods {
                 generateUserAbility("Strength"),
                 generateUserAbility("Knowledge"),
                 generateUserAbility("Willpower"));
+    }
+
+    public static void saveActor(Actor userChar, Path location){
+        WriteReadCharacter.packActor(userChar, location);
+    }
+
+    public static void areWeSaving(){
+        saveActor();
     }
 }

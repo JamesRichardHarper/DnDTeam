@@ -12,14 +12,6 @@ public class BulkText {
                 [9] Quit""");
     }
 
-    public static void randomCharacterPage(){
-        System.out.println("""
-                Sure!\s
-                Here's one now:\s
-                """);
-
-    }
-
     public static void printCharacterPage(){
         System.out.println("""
                 Okay!\s

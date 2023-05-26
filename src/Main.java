@@ -3,10 +3,10 @@ import UI.Pages;
 
 public class Main {
     public static void main(String[] args) {
-        Boolean isOn = true;
+        boolean isOn = true;
 
         while(isOn){
-            isOn = Pages.getInstance().openingPage(isOn);
+            isOn = Pages.getInstance().openingPage(true);
         }
 
     }

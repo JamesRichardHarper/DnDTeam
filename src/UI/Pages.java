@@ -1,54 +1,59 @@
 package UI;
 
 import BattleClasses.FightBattle;
-import BattleClasses.FightGame;
 import CharacterClasses.Actor;
-import CharacterClasses.RandomActor;
+import CharacterClasses.ActorGeneration;
+import Settings.SettingsMenu;
+import Settings.WriteReadCharacter;
+
+import java.nio.file.Paths;
 
 public final class Pages {
         boolean isOn;
+        SettingsMenu settings = new SettingsMenu();
         private static Pages instance;
 
-        private Pages(){};
+        private Pages() {
+        }
 
-        public static Pages getInstance(){
-                if(instance == null){
+        public static Pages getInstance() {
+                if (instance == null) {
                         instance = new Pages();
                 }
 
                 return instance;
         }
 
-        public boolean openingPage(boolean isOn){
+        public boolean openingPage(boolean isOn) {
                 this.isOn = isOn;
                 BulkText.printIntroduction();
-                int input = Input.readInt();
-                switch(input){
+                int inputOpening = Input.readInt();
+
+                switch (inputOpening) {
                         //Play
-                        case(1):{
+                        case (1) -> {
                                 FightBattle need2fite = new FightBattle();
-                                RandomActor needAnActor = new RandomActor();
-                                Actor randomPersonOne = needAnActor.createChar();
-                                Actor randomPersonTwo = needAnActor.createChar();
+                                Actor randomPersonOne = ActorGeneration.createChar();
+                                Actor randomPersonTwo = ActorGeneration.createChar();
                                 need2fite.beginFight(randomPersonOne, randomPersonTwo);
-                                break;
                         }
-                        //Create Random Person
-                        case(2):{
-                                System.out.println("Sure thing!");
-                                //Remember to delete this and the import, it's temporary
-                                RandomActor needAnActor = new RandomActor();
-                                Actor randomPerson = needAnActor.createChar();
-                                System.out.println("\n" + randomPerson.toString());
-                                break;
+
+                        //Create Person
+                        case (2) -> {
+                                characterPage();
                         }
+
+                        //Settings
+                        case (8) -> {
+                                settingsPage();
+                        }
+
                         //Exit
-                        case(9):{
+                        case (9) -> {
                                 System.out.println("Goodbye!");
                                 isOn = false;
-                                break;
                         }
-                        default:{
+                        default -> {
                                 System.out.println("Please input a valid number.");
                         }
                 }
@@ -56,4 +61,54 @@ public final class Pages {
                 return isOn;
 
         }
+
+        public void characterPage() {
+                boolean randomName = PageMethods.randomNameCheck();
+                boolean randomChar = PageMethods.randomCharacterCheck();
+                Actor activeCharacter;
+
+                if (randomName) {
+                        if (randomChar) { //Random Name w/ random character
+                                activeCharacter = ActorGeneration.createChar();
+                        } else { //Random Name w/ custom character
+                                activeCharacter = PageMethods.createUserActor(ActorGeneration.getRandomName());
+                        }
+                } else {
+                        if (randomChar) { //Custom Name w/ random character
+                                activeCharacter = ActorGeneration.createChar(BulkText.getVariableString("Name"));
+                        } else { //Custom Name w/ custom character
+                                activeCharacter = PageMethods.createUserActor();
+                        }
+                }
+
+                if(PageMethods.savingChar(activeCharacter)){
+                        PageMethods.saveActor(activeCharacter, Paths.get(settings.getSetting("Save_Location")));
+                }
+        }
+
+        public void settingsPage(){
+                BulkText.printSettingsPage(settings.getSetting("Save_Location"));
+                int inputCharacter = Input.readInt();
+
+                switch(inputCharacter){
+                        case(1) -> {
+                                System.out.println("Enter New Location");
+                                String newPathLocation = Input.readString();
+                                settings.updateSetting("Save_Location",
+                                        newPathLocation);
+                        }
+                        case(9) -> {
+                                System.out.println("Backing out.");
+                        }
+                        default -> {
+                                System.out.println("Please input a valid number.");
+                        }
+                }
+        }
+
+        /*public void templatePage(){
+                BulkText.printTemplatePage();
+                int inputCharacter = Input.readInt();
+                String intputString = Input.readString();
+        }*/
 }

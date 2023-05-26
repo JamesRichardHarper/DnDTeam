@@ -1,7 +1,5 @@
 package CharacterClasses;
 
-import Innates.AbilityModifier;
-import Innates.AbilityScore;
 import Innates.Attribute;
 import Innates.TotalAbility;
 
@@ -46,29 +44,61 @@ public class Actor {
     public void setName(String name) {
         this.name = name;
     }
+
+    public TotalAbility getActiveStat() {
+        return activeStat;
+    }
     public void setActiveStat(TotalAbility activeStat) {
         this.activeStat = activeStat;
     }
+
     public Boolean getAlive() {
         return alive;
     }
     public void setAlive(Boolean alive) {
         this.alive = alive;
     }
+
     public Boolean getPlayerControlled() {
         return playerControlled;
     }
     public void setPlayerControlled(Boolean playerControlled) {
         this.playerControlled = playerControlled;
     }
-    public TotalAbility getActiveStat() {
-        return activeStat;
+
+    public Attribute getHealth() {
+        return this.health;
     }
-    public int getHealth() {
-        return health.getModifiedAbilityScore();
+    public void setHealth(Attribute health) {
+        this.health = health;
     }
-    public int getStamina() {
-        return stamina.getModifiedAbilityScore();
+
+    public Attribute getStamina() {
+        return this.stamina;
+    }
+    public void setStamina(Attribute stamina) {
+        this.stamina = stamina;
+    }
+
+    public TotalAbility getStrength() {
+        return strength;
+    }
+    public void setStrength(TotalAbility strength) {
+        this.strength = strength;
+    }
+
+    public TotalAbility getKnowledge() {
+        return knowledge;
+    }
+    public void setKnowledge(TotalAbility knowledge) {
+        this.knowledge = knowledge;
+    }
+
+    public TotalAbility getWillpower() {
+        return willpower;
+    }
+    public void setWillpower(TotalAbility willpower) {
+        this.willpower = willpower;
     }
 
     //Attack Methods
@@ -80,32 +110,35 @@ public class Actor {
     }
 
     public TotalAbility attackWithStat(){
-        TotalAbility statUsed = getRandomAbility();
+        TotalAbility statUsed = returnRandomAbility();
         setActiveStat(statUsed);
         return statUsed;
     }
 
-    public TotalAbility getRandomAbility(){
+    public TotalAbility returnRandomAbility(){
         ArrayList<TotalAbility> abilityList = new ArrayList<>();
-        if (strength.getModifiedAbilityModifier()>-1){
-            abilityList.add(strength);
+        if (getStrength().getModifiedAbilityModifier()>-1){
+            abilityList.add(getStrength());
         }
-        if (strength.getModifiedAbilityModifier()>-1){
-            abilityList.add(knowledge);
+        if (getKnowledge().getModifiedAbilityModifier()>-1){
+            abilityList.add(getKnowledge());
         }
-        if (strength.getModifiedAbilityModifier()>-1){
-            abilityList.add(willpower);
+        if (getKnowledge().getModifiedAbilityModifier()>-1){
+            abilityList.add(getWillpower());
         }
         int chance = random.nextInt(abilityList.size()-1);
         return abilityList.get(chance);
     }
 
     public void takeDamage(int damage){
-        setAlive(health.modifyAbility(damage, false));
+        setAlive(
+                /*health.modifyAbility(damage, false)*/
+                getHealth().modifyAbility(damage, false)
+        );
     }
 
     public void healDamage(int heal){
-        health.modifyAbility(heal, true);
+        getHealth().modifyAbility(heal, true);
     }
 
     @Override

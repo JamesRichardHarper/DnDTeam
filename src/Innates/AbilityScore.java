@@ -36,12 +36,7 @@ public abstract class AbilityScore {
 
     public Boolean modifyAbility(int changeAmount, Boolean improve){
         if (improve){
-            if((changeAmount + getModifiedAbilityScore()) > (getBaseAbilityScore())){
-                setModifiedAbilityScore(getBaseAbilityScore());
-            }
-            else{
-                setModifiedAbilityScore(getModifiedAbilityScore() + changeAmount);
-            }
+            setModifiedAbilityScore(Math.min((changeAmount + getModifiedAbilityScore()), (getBaseAbilityScore())));
             return true;
         }
         else{

@@ -1,4 +1,5 @@
 package UI.PageBuilder;
+import java.util.Arrays;
 
 public class MenuFactory {
     public static String makeMenu(String title, String subtitle, PageOption[] actionsTotal){

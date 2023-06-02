@@ -5,12 +5,10 @@ import java.util.function.Consumer;
 public class PageOption {
     int numberInput;
     String actionText;
-    Consumer<Runnable> action;
 
-    public PageOption(int numberInput, String actionText, Consumer<Runnable> action) {
+    public PageOption(int numberInput, String actionText) {
         this.numberInput = numberInput;
         this.actionText = actionText;
-        this.action = action;
     }
 
     public int getNumberInput() {
@@ -21,7 +19,5 @@ public class PageOption {
         return actionText;
     }
 
-    public Consumer<Runnable> getAction() {
-        return action;
-    }
+
 }

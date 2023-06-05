@@ -26,6 +26,20 @@ public class ActorGeneration {
                 randomAbilities[2]);
     }
 
+    //Custom character, random name
+    public static Actor createChar(Attribute health,
+                                   Attribute stamina,
+                                   TotalAbility strength,
+                                   TotalAbility knowledge,
+                                   TotalAbility wisdom){
+        return createChar(getRandomName(),
+                health,
+                stamina,
+                strength,
+                knowledge,
+                wisdom);
+    }
+
     //Base Create, fully customizable
     public static Actor createChar(String name,
                             Attribute health,
@@ -45,7 +59,7 @@ public class ActorGeneration {
         return Names.values()[random.nextInt(Names.values().length)].getName();
     }
 
-    public static Attribute generateAttribute(int capacity, int regenAmount,String name){
+    public static Attribute generateAttribute(int capacity, int regenAmount, String name){
         return new Attribute(capacity, regenAmount, name);
     }
 

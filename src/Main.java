@@ -1,16 +1,11 @@
-import UI.Input;
-import UI.Pages;
+import UI.ActualPages.OpeningPage;
 
 public class Main {
     public static void main(String[] args) {
+        OpeningPage openingPage = new OpeningPage();
         boolean isOn = true;
-
-        /*while(isOn){
-            isOn = Pages.getInstance().openingPage(true);
-        }*/
-
         while(isOn){
-            isOn = Pages.getInstance().openingPage();
+            isOn = openingPage.runPage();
         }
     }
 }

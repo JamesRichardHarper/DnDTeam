@@ -1,5 +1,6 @@
 package UI.ActualPages.CommonPages;
 
+import UI.Input;
 import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
@@ -13,14 +14,14 @@ public class ConfirmationPage implements InteractivePage {
         this.pageActions[1] = new PageOption(2,"No");
 
         this.menu = MenuFactory.makeMenu(
-                confirmationOf,
+                String.format("Are you wanting to %s?", confirmationOf),
                 "",
                 pageActions);
     }
 
     @Override
     public PageOption[] getPageActions() {
-        return new PageOption[0];
+        return pageActions;
     }
 
     @Override
@@ -29,7 +30,19 @@ public class ConfirmationPage implements InteractivePage {
     }
 
     @Override
-    public void runPage() {
+    public boolean runPage() {
+        boolean confirm = false;
 
+        System.out.println(getMenu());
+
+        switch (chosenOption(Input.readInt())){
+            case(1) -> {
+                confirm = true;
+            }
+            case(2) -> {
+                confirm = false;
+            }
+        }
+        return confirm;
     }
 }

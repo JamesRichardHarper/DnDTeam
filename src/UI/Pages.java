@@ -100,12 +100,6 @@ public final class Pages {
 
         }
 
-        public Boolean openingPage() {
-                OpeningPage openingPage = new OpeningPage();
-                openingPage.chosenOption();
-                return false;
-        }
-
         public void characterPage() {
                 boolean randomName = PageMethods.randomNameCheck();
                 boolean randomChar = PageMethods.randomCharacterCheck();

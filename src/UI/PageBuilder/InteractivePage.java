@@ -1,20 +1,17 @@
 package UI.PageBuilder;
-
-import UI.Input;
-
 import java.util.Arrays;
 
 public interface InteractivePage {
     PageOption[] getPageActions();
     String getMenu();
-    void runPage();
+    boolean runPage();
     default int chosenOption(int input){
-        System.out.println(getMenu());
-        return checkInput(getPageActions(), Input.readInt());
+        return checkInput(getPageActions(), input);
     }
 
     default int checkInput(PageOption[] actions, int input){
-        while(true){
+        boolean validInput = false;
+        while(!validInput){
             try{
                 return Arrays.stream(actions)
                         .filter(Action -> Action.getNumberInput() == input)
@@ -25,5 +22,11 @@ public interface InteractivePage {
                 System.out.println("Not a valid step, try again.");
             }
         }
+        return 
+    }
+
+    default boolean exit(){
+        System.out.println("Returning");
+        return false;
     }
 }

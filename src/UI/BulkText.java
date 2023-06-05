@@ -40,9 +40,10 @@ public class BulkText {
     }
 
     public static void printCustomVariable(String variableNeeded){
-        System.out.printf("""
-                Okay!\s
-                Please enter the %s wanted for this character. %n""",
+        System.out.printf(
+                """
+                Please enter the %s wanted.
+                """,
                 variableNeeded);
     }
 

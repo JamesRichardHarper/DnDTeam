@@ -3,16 +3,19 @@ package UI.ActualPages;
 import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
+import Settings.Options;
 import UI.Input;
 import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
 
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class OpeningPage implements InteractivePage {
     private final PageOption[] pageActions = new PageOption[4];
     private String menu = "";
+    private Options settings = new Options();
 
     public OpeningPage(){
         this.pageActions[0] = new PageOption(1,"Play");
@@ -26,6 +29,8 @@ public class OpeningPage implements InteractivePage {
                 pageActions);
     }
 
+    public Options getSettings(){return settings;}
+
     @Override
     public PageOption[] getPageActions() {
         return pageActions;
@@ -37,7 +42,12 @@ public class OpeningPage implements InteractivePage {
     }
 
     @Override
-    public void runPage() {
+    public boolean runPage() {
+        boolean isOn = true;
+        boolean runPage = true;
+
+        System.out.println(getMenu());
+
         switch (chosenOption(Input.readInt())) {
             //Play
             case (1) -> {
@@ -46,21 +56,29 @@ public class OpeningPage implements InteractivePage {
                 Actor randomPersonTwo = ActorGeneration.createChar();
                 need2fite.beginFight(randomPersonOne, randomPersonTwo);
             }
+
             //Create Person
             case (2) -> {
-                characterPage();
+                CharacterPage characterPage = new CharacterPage(Paths.get(getSettings().getSetting("Save_Location")));
+                while(runPage) {
+                    runPage = characterPage.runPage();
+                };
             }
 
             //Settings
             case (8) -> {
-                settingsPage();
+                SettingsPage settingsPage = new SettingsPage(getSettings());
+                while(runPage) {
+                    runPage = settingsPage.runPage();
+                }
             }
 
             //Exit
             case (9) -> {
-                System.out.println("Goodbye!");
+                isOn = exit();
             }
         }
+        return isOn;
     }
 
     /*@Override

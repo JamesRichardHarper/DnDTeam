@@ -10,12 +10,12 @@ public class ConfirmationPage implements InteractivePage {
     private String menu = "";
 
     public ConfirmationPage(String confirmationOf) {
-        this.pageActions[0] = new PageOption(1,"Yes");
-        this.pageActions[1] = new PageOption(2,"No");
+        this.pageActions[0] = new PageOption(1,"Yes", () -> true);
+        this.pageActions[1] = new PageOption(2,"No", () -> false);
 
         this.menu = MenuFactory.makeMenu(
                 String.format("Are you wanting to %s?", confirmationOf),
-                "",
+                "".trim(),
                 pageActions);
     }
 
@@ -26,7 +26,7 @@ public class ConfirmationPage implements InteractivePage {
 
     @Override
     public String getMenu() {
-        return null;
+        return menu;
     }
 
     @Override

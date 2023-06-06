@@ -11,17 +11,22 @@ import UI.PageBuilder.PageOption;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class OpeningPage implements InteractivePage {
     private final PageOption[] pageActions = new PageOption[4];
     private String menu = "";
     private Options settings = new Options();
+    public CharacterPage characterPage = new CharacterPage(Paths.get(getSettings().getSetting("Save_Location")));
+    //public Function<CharacterPage, Boolean> action = CharacterPage::runPage;
 
     public OpeningPage(){
-        this.pageActions[0] = new PageOption(1,"Play");
-        this.pageActions[1] = new PageOption(2,"Create Random Character");
-        this.pageActions[2] = new PageOption(8,"Settings");
-        this.pageActions[3] = new PageOption(9,"Quit");
+        this.pageActions[0] = new PageOption(1,"Play", () -> true);
+        /*this.pageActions[1] = new PageOption(2,"Create Random Character", () -> characterPage.runPage());*/
+        this.pageActions[1] = new PageOption(2,"Create Random Character", () -> characterPage.runPage());
+        this.pageActions[2] = new PageOption(8,"Settings", () -> true);
+        this.pageActions[3] = new PageOption(9,"Quit", () -> true);
 
         this.menu = MenuFactory.makeMenu(
                 "Welcome!",

@@ -6,23 +6,20 @@ public interface InteractivePage {
     String getMenu();
     boolean runPage();
     default int chosenOption(int input){
-        return checkInput(getPageActions(), input);
+        return returnInput(getPageActions(), input);
     }
 
-    default int checkInput(PageOption[] actions, int input){
-        boolean validInput = false;
-        while(!validInput){
-            try{
-                return Arrays.stream(actions)
-                        .filter(Action -> Action.getNumberInput() == input)
-                        .findFirst().get().getNumberInput();
+    default int returnInput(PageOption[] actions, int input){
+        try{
+            return Arrays.stream(actions)
+                    .filter(Action -> Action.getNumberInput() == input)
+                    .findFirst().get().getNumberInput();
 
-            }
-            catch(Exception exception){
-                System.out.println("Not a valid step, try again.");
-            }
         }
-        return 
+        catch(Exception exception){
+            System.out.println("Please enter a valid value");
+            return 0;
+        }
     }
 
     default boolean exit(){

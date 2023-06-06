@@ -25,18 +25,17 @@ public class CharacterPage implements InteractivePage {
 
     public CharacterPage(Path saveLocation){
         this.saveLocation = saveLocation;
-        this.pageActions[0] = new PageOption(1,"Random Stats - Random Name");
-        this.pageActions[1] = new PageOption(2,"Random  Stats - Custom Name");
-        this.pageActions[2] = new PageOption(3,"Custom Stats - Random Name");
-        this.pageActions[3] = new PageOption(4,"Custom Stats - Custom Name");
-        this.pageActions[4] = new PageOption(9,"Return");
+        this.pageActions[0] = new PageOption(1,"Random Stats - Random Name", () -> true);
+        this.pageActions[1] = new PageOption(2,"Random  Stats - Custom Name", () -> true);
+        this.pageActions[2] = new PageOption(3,"Custom Stats - Random Name", () -> true);
+        this.pageActions[3] = new PageOption(4,"Custom Stats - Custom Name", () -> true);
+        this.pageActions[4] = new PageOption(9,"Return", () -> true);
 
         this.menu = MenuFactory.makeMenu(
                 "What kind of character do you want to make?",
                 """
                         A completely random character will have all stats randomised, as well as having a random name.
-                        A custom character will have the option of creating its' own stats, as well as having a personalised name.
-                        """,
+                        A custom character will have the option of creating its' own stats, as well as having a personalised name.""",
                 pageActions);
     }
 
@@ -120,8 +119,7 @@ public class CharacterPage implements InteractivePage {
                 Here is your character!
                 -----------------------
                 %s
-                -----------------------          
-                """,
+                -----------------------""",
                 charStats);
     }
 

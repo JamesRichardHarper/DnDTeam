@@ -13,8 +13,8 @@ public class SettingsPage implements InteractivePage {
 
     public SettingsPage(Options settings) {
         this.settings = settings;
-        this.pageActions[0] = new PageOption(1,"Change Save Location");
-        this.pageActions[1] = new PageOption(2,"Quit");
+        this.pageActions[0] = new PageOption(1,"Change Save Location", () -> true);
+        this.pageActions[1] = new PageOption(2,"Quit", () -> true);
 
         this.menu = MenuFactory.makeMenu(
                 "Settings Menu",

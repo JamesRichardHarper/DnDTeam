@@ -12,14 +12,6 @@ public class BulkText {
                 [9] Quit""");
     }
 
-    public static void randomCharacterPage(){
-        System.out.println("""
-                Sure!\s
-                Here's one now:\s
-                """);
-
-    }
-
     public static void printCharacterPage(){
         System.out.println("""
                 Okay!\s
@@ -48,9 +40,10 @@ public class BulkText {
     }
 
     public static void printCustomVariable(String variableNeeded){
-        System.out.printf("""
-                Okay!\s
-                Please enter the %s wanted for this character. %n""",
+        System.out.printf(
+                """
+                Please enter the %s wanted.
+                """,
                 variableNeeded);
     }
 

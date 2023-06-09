@@ -4,7 +4,14 @@ public enum Names {
     ABEL("Abel"),
     BEATRICE("Beatrice"),
     CARLY("Carly"),
-    DAVE("Dave");
+    DAVE("Dave"),
+    ZACKARIAH("Zackariah"),
+    JAMES("James"),
+    YELENA("Yelena"),
+    XI("Xi"),
+    MACK("Mack"),
+    LUCILLE("Lucille"),
+    TASHA("Tasha");
 
     private final String name;
 

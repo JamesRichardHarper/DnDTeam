@@ -7,16 +7,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class SettingsMenu {
+public class Options {
         FileSystem fileSystem = FileSystems.getDefault();
         private final Path SETTINGS_NAME = Paths.get("Settings.properties");
         private final Path MIDDLE_FOLDERS = Paths.get("src/Assets/");
         private final Path ROOT_PATH = fileSystem.getPath("").toAbsolutePath();
         private final Path PROPERTIES_FILE_PATH = ROOT_PATH.resolve(MIDDLE_FOLDERS.resolve(SETTINGS_NAME));
         private final String PROPERTIES_FILE_STRING = PROPERTIES_FILE_PATH.toString();
-        private Properties properties;
+        private final Properties properties;
 
-        public SettingsMenu(){
+        public Options(){
                 properties = new Properties();
                 loadProperties();
                 System.out.println(PROPERTIES_FILE_STRING);

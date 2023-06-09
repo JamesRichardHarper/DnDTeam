@@ -3,14 +3,14 @@ package UI;
 import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
-import Settings.SettingsMenu;
-import Settings.WriteReadCharacter;
+import Settings.Options;
+import UI.ActualPages.OpeningPage;
 
 import java.nio.file.Paths;
 
 public final class Pages {
         boolean isOn;
-        SettingsMenu settings = new SettingsMenu();
+        Options settings = new Options();
         private static Pages instance;
 
         private Pages() {
@@ -24,12 +24,50 @@ public final class Pages {
                 return instance;
         }
 
-        public boolean openingPage(boolean isOn) {
+        public boolean openingPageOld(boolean isOn) {
                 this.isOn = isOn;
                 BulkText.printIntroduction();
                 int inputOpening = Input.readInt();
 
                 switch (inputOpening) {
+                        //Play
+                        case (1) -> {
+                                FightBattle need2fite = new FightBattle();
+                                Actor randomPersonOne = ActorGeneration.createChar();
+                                Actor randomPersonTwo = ActorGeneration.createChar();
+                                need2fite.beginFight(randomPersonOne, randomPersonTwo);
+                        }
+
+                        //Create Person
+                        case (2) -> {
+                                characterPage();
+                        }
+
+                        //Settings
+                        case (8) -> {
+                                settingsPage();
+                        }
+
+                        //Exit
+                        case (9) -> {
+                                System.out.println("Goodbye!");
+                                isOn = false;
+                        }
+                        default -> {
+                                System.out.println("Please input a valid number.");
+                        }
+                }
+
+                return isOn;
+
+        }
+
+        public boolean openingPageSecondOld(boolean isOn) {
+                this.isOn = isOn;
+                OpeningPage openingPage = new OpeningPage();
+                System.out.println(openingPage.getMenu());
+                int input = Input.readInt();
+                switch (input) {
                         //Play
                         case (1) -> {
                                 FightBattle need2fite = new FightBattle();

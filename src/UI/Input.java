@@ -24,4 +24,21 @@ public class Input {
         return value;
 
     }
+
+    public static String getVariableString(String variableNeeded){
+        System.out.println(printCustomVariableNeeded(variableNeeded));
+        return Input.readString();
+    }
+
+    public static int getVariableInt(String variableNeeded){
+        System.out.println(printCustomVariableNeeded(variableNeeded));
+        return Input.readInt();
+    }
+
+    public static String printCustomVariableNeeded(String variableNeeded){
+        return String.format("""
+                Please enter the %s wanted.
+                """,
+                variableNeeded);
+    }
 }

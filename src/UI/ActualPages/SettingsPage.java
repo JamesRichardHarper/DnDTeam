@@ -6,15 +6,17 @@ import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
 
+import java.util.ArrayList;
+
 public class SettingsPage implements InteractivePage {
-    private final PageOption[] pageActions = new PageOption[2];
+    private final ArrayList<PageOption> pageActions = new ArrayList<>();
     private String menu = "";
     private Options settings;
 
+
     public SettingsPage(Options settings) {
         this.settings = settings;
-        this.pageActions[0] = new PageOption(1,"Change Save Location", () -> true);
-        this.pageActions[1] = new PageOption(2,"Quit", () -> true);
+        pageActions.add(new PageOption(1,"Change Save Location", () -> updateSetting(settings)));
 
         this.menu = MenuFactory.makeMenu(
                 "Settings Menu",
@@ -28,8 +30,13 @@ public class SettingsPage implements InteractivePage {
         return settings;
     }
 
+    public boolean updateSetting(Options settings){
+        settings.updateSetting("Save_Location", Input.getVariableString("save location"));
+        return true;
+    }
+
     @Override
-    public PageOption[] getPageActions() {
+    public ArrayList<PageOption> getPageActions() {
         return pageActions;
     }
 
@@ -39,20 +46,17 @@ public class SettingsPage implements InteractivePage {
     }
 
     @Override
-    public boolean runPage() {
+    public String getActionTitle() {
+        return "Settings";
+    }
+
+    @Override
+    public boolean startPage() {
         boolean isOn = true;
-
         System.out.println(getMenu());
-
-        switch(chosenOption(Input.readInt())){
-            case(1) -> {
-                getSettings().updateSetting("Save_Location",
-                        Input.getVariableString("save location"));
-            }
-            case(9) -> {
-                isOn = exit();
-            }
+        while(isOn){
+            isOn = running(getPageActions());
         }
-        return isOn;
+        return false;
     }
 }

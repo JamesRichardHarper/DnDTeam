@@ -1,31 +1,28 @@
 package UI.ActualPages;
 
-import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
 import Innates.Attribute;
 import Innates.TotalAbility;
 import Settings.WriteReadCharacter;
 import UI.ActualPages.CommonPages.ConfirmationPage;
-import UI.BulkText;
 import UI.Input;
 import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
-import UI.PageMethods;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class CharacterPage implements InteractivePage {
-    private final PageOption[] pageActions = new PageOption[5];
+    private final ArrayList<PageOption> pageActions = new ArrayList<>();
     private String menu = "";
     private Actor activeCharacter;
     private Path saveLocation;
 
     public CharacterPage(Path saveLocation){
         this.saveLocation = saveLocation;
-        this.pageActions[0] = new PageOption(1,"Random Stats - Random Name", () -> true);
+        pageActions.add(new PageOption(1,"Random Stats - Random Name", () -> true));
         this.pageActions[1] = new PageOption(2,"Random  Stats - Custom Name", () -> true);
         this.pageActions[2] = new PageOption(3,"Custom Stats - Random Name", () -> true);
         this.pageActions[3] = new PageOption(4,"Custom Stats - Custom Name", () -> true);
@@ -50,7 +47,7 @@ public class CharacterPage implements InteractivePage {
     }
 
     @Override
-    public PageOption[] getPageActions() {
+    public ArrayList<PageOption> getPageActions() {
         return pageActions;
     }
 
@@ -60,7 +57,12 @@ public class CharacterPage implements InteractivePage {
     }
 
     @Override
-    public boolean runPage() {
+    public String getActionTitle() {
+        return "Create a character";
+    }
+
+    @Override
+    public boolean startPage() {
         boolean isOn = true;
 
         System.out.println(getMenu());
@@ -129,7 +131,7 @@ public class CharacterPage implements InteractivePage {
 
     public boolean checkSave(){
         ConfirmationPage confirmationPage = new ConfirmationPage("save character");
-        return confirmationPage.runPage();
+        return confirmationPage.startPage();
     }
 
     public Attribute generateUserAttribute(String name){

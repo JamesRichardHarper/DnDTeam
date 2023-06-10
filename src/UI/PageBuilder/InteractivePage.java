@@ -1,25 +1,46 @@
 package UI.PageBuilder;
-import java.util.Arrays;
+import UI.Input;
+
+import java.util.ArrayList;
 
 public interface InteractivePage {
-    PageOption[] getPageActions();
+    ArrayList<PageOption> getPageActions();
     String getMenu();
-    boolean runPage();
-    default int chosenOption(int input){
-        return returnInput(getPageActions(), input);
+    String getActionTitle();
+    boolean startPage();
+
+    default void setPageOptions(ArrayList<PageOption> actions){
+        actions.add(new PageOption(actions.size()+1,  "Exit", () -> false));
     }
 
-    default int returnInput(PageOption[] actions, int input){
-        try{
-            return Arrays.stream(actions)
-                    .filter(Action -> Action.getNumberInput() == input)
-                    .findFirst().get().getNumberInput();
+    default ArrayList<PageOption> setPageOptions(InteractivePage[] pagesUsed){
+        int index = 1;
+        ArrayList<PageOption> totalActions = new ArrayList<>();
+        for(InteractivePage page:pagesUsed){
+            PageOption pageOption = new PageOption(index, page.getActionTitle(), page::startPage);
+            totalActions.add(pageOption);
+            index++;
+        }
+        setPageOptions(totalActions);
+        return totalActions;
+    }
 
-        }
-        catch(Exception exception){
-            System.out.println("Please enter a valid value");
-            return 0;
-        }
+    default PageOption returnInput(ArrayList<PageOption> actions, int input){
+        return actions.stream()
+                .filter(Action -> Action.getNumberInput() == input)
+                .findFirst().orElse(
+                        new PageOption(0, "", this::invalidPage)
+                );
+    }
+
+    default boolean running(ArrayList<PageOption> actions){
+        PageOption chosenOne = returnInput(actions, Input.readInt());
+        return chosenOne.getAction().get() || !chosenOne.getActionText().equals("Exit");
+    }
+
+    default boolean invalidPage(){
+        System.out.println("Invalid page action chosen.\nPlease try again.");
+        return true;
     }
 
     default boolean exit(){

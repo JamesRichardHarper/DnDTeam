@@ -10,23 +10,22 @@ import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class OpeningPage implements InteractivePage {
-    private final PageOption[] pageActions = new PageOption[4];
+    private final Options settings = new Options();
     private String menu = "";
-    private Options settings = new Options();
-    public CharacterPage characterPage = new CharacterPage(Paths.get(getSettings().getSetting("Save_Location")));
-    //public Function<CharacterPage, Boolean> action = CharacterPage::runPage;
+    private final InteractivePage[] pages = {
+            new CharacterPage(Paths.get(getSettings().getSetting("Save_Location"))),
+            new SettingsPage(getSettings())
+    };
+    private ArrayList<PageOption> pageActions;
 
     public OpeningPage(){
-        this.pageActions[0] = new PageOption(1,"Play", () -> true);
-        /*this.pageActions[1] = new PageOption(2,"Create Random Character", () -> characterPage.runPage());*/
-        this.pageActions[1] = new PageOption(2,"Create Random Character", () -> characterPage.runPage());
-        this.pageActions[2] = new PageOption(8,"Settings", () -> true);
-        this.pageActions[3] = new PageOption(9,"Quit", () -> true);
+        pageActions = setPageOptions(pages);
 
         this.menu = MenuFactory.makeMenu(
                 "Welcome!",
@@ -37,7 +36,7 @@ public class OpeningPage implements InteractivePage {
     public Options getSettings(){return settings;}
 
     @Override
-    public PageOption[] getPageActions() {
+    public ArrayList<PageOption> getPageActions() {
         return pageActions;
     }
 
@@ -47,74 +46,18 @@ public class OpeningPage implements InteractivePage {
     }
 
     @Override
-    public boolean runPage() {
-        boolean isOn = true;
-        boolean runPage = true;
-
-        System.out.println(getMenu());
-
-        switch (chosenOption(Input.readInt())) {
-            //Play
-            case (1) -> {
-                FightBattle need2fite = new FightBattle();
-                Actor randomPersonOne = ActorGeneration.createChar();
-                Actor randomPersonTwo = ActorGeneration.createChar();
-                need2fite.beginFight(randomPersonOne, randomPersonTwo);
-            }
-
-            //Create Person
-            case (2) -> {
-                CharacterPage characterPage = new CharacterPage(Paths.get(getSettings().getSetting("Save_Location")));
-                while(runPage) {
-                    runPage = characterPage.runPage();
-                };
-            }
-
-            //Settings
-            case (8) -> {
-                SettingsPage settingsPage = new SettingsPage(getSettings());
-                while(runPage) {
-                    runPage = settingsPage.runPage();
-                }
-            }
-
-            //Exit
-            case (9) -> {
-                isOn = exit();
-            }
-        }
-        return isOn;
+    public String getActionTitle() {
+        return null;
     }
 
-    /*@Override
-    public void changePage() {
-        switch (chosenOption()) {
-            //Play
-            case (1) -> {
-                FightBattle need2fite = new FightBattle();
-                Actor randomPersonOne = ActorGeneration.createChar();
-                Actor randomPersonTwo = ActorGeneration.createChar();
-                need2fite.beginFight(randomPersonOne, randomPersonTwo);
-            }
-
-            //Create Person
-            case (2) -> {
-                characterPage();
-            }
-
-            //Settings
-            case (8) -> {
-                settingsPage();
-            }
-
-            //Exit
-            case (9) -> {
-                System.out.println("Goodbye!");
-                isOn = false;
-            }
-            default -> {
-                System.out.println("Please input a valid number.");
-            }
+    @Override
+    public boolean startPage() {
+        boolean isOn = true;
+        while(isOn){
+            System.out.println(getMenu());
+            isOn = running(getPageActions());
         }
-    }*/
+        return false;
+    }
+
 }

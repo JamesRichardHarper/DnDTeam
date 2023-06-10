@@ -23,5 +23,7 @@ public class PageOption {
         return actionText;
     }
 
+    public Supplier<Boolean> getAction(){ return action ;}
+
 
 }

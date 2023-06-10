@@ -5,13 +5,15 @@ import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
 
+import java.util.ArrayList;
+
 public class ConfirmationPage implements InteractivePage {
-    private final PageOption[] pageActions = new PageOption[2];
+    private final ArrayList<PageOption> pageActions = new ArrayList<>();
     private String menu = "";
 
     public ConfirmationPage(String confirmationOf) {
-        this.pageActions[0] = new PageOption(1,"Yes", () -> true);
-        this.pageActions[1] = new PageOption(2,"No", () -> false);
+        pageActions.add(new PageOption(1,"Yes", () -> true));
+        pageActions.add(new PageOption(2,"No", () -> false));
 
         this.menu = MenuFactory.makeMenu(
                 String.format("Are you wanting to %s?", confirmationOf),
@@ -20,7 +22,7 @@ public class ConfirmationPage implements InteractivePage {
     }
 
     @Override
-    public PageOption[] getPageActions() {
+    public ArrayList<PageOption> getPageActions() {
         return pageActions;
     }
 
@@ -30,18 +32,19 @@ public class ConfirmationPage implements InteractivePage {
     }
 
     @Override
-    public boolean runPage() {
+    public String getActionTitle() {
+        return null;
+    }
+
+    @Override
+    public boolean startPage() {
+        boolean isOn = true;
         boolean confirm = false;
 
         System.out.println(getMenu());
 
-        switch (chosenOption(Input.readInt())){
-            case(1) -> {
-                confirm = true;
-            }
-            case(2) -> {
-                confirm = false;
-            }
+        while(isOn){
+            isOn = running(getPageActions());
         }
         return confirm;
     }

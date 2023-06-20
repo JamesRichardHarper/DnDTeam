@@ -18,9 +18,7 @@ public interface InteractivePage {
                 while(!validInput) {
                     chosenOne = returnInput(getPageActions(), Input.readInt());
                     actionNotFinished = chosenOne.getAction().get();
-                    if (chosenOne.getNumberInput()!=0){
-                        validInput = true;
-                    }
+                    validInput = validChoice(chosenOne);
                     if(chosenOne.getActionText().equals("Exit")){
                         pageNotFinished = false;
                     }
@@ -69,15 +67,9 @@ public interface InteractivePage {
         return true;
     }
 
-    //W.I.P to clean up start up method
-    /*default boolean validChoice(PageOption chosenOne){
-        if (chosenOne.getNumberInput()!=0){
-            return true;
-        }
-        if(chosenOne.getActionText().equals("Exit")){
-            pageNotFinished = false;
-        }
-    }*/
+    default boolean validChoice(PageOption chosenOne){
+        return chosenOne.getNumberInput() != 0;
+    }
 
     default boolean exit(){
         System.out.println("Returning");

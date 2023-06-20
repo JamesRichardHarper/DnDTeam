@@ -46,7 +46,7 @@ public class Round {
     }
 
     public double getMultiplier(String attackedAbility, String attackerAbility){
-        double effectiveAttack = 2;
+        double effectiveAttack = 1.5;
         double ineffectiveAttack = 0.5;
 
         switch(attackerAbility){
@@ -77,12 +77,7 @@ public class Round {
 
     public Boolean playerNotDead(Boolean playerOneAlive, Boolean playerTwoAlive){
         if (playerOneAlive) {
-            if (playerTwoAlive){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return playerTwoAlive;
         }
         else{
             return false;

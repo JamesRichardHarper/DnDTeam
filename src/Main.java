@@ -5,7 +5,7 @@ public class Main {
         OpeningPage openingPage = new OpeningPage();
         boolean isOn = true;
         while(isOn){
-            isOn = openingPage.runPage();
+            isOn = openingPage.startPage();
         }
     }
 }

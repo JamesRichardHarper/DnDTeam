@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MenuFactory {
-    public static String makeMenu(String title, String subtitle, PageOption[] actionsTotal){
+    public static String makeMenu(String title, String subtitle, ArrayList<PageOption> actionsTotal){
         String finalText = "";
         ArrayList<String> builderString = new ArrayList<>();
 
@@ -21,15 +21,7 @@ public class MenuFactory {
         for(String text:builderString){
             finalText = String.format("%s\n%s", finalText, text);
         }
-        return /*String.format("""
-                %1s
-                %2s
-                %3s
-                """,
-                title,
-                subtitle,
-                finalText);*/
-        finalText;
+        return finalText;
     }
 
     /*public static String checkEmpty(String text){

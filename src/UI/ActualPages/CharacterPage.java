@@ -1,35 +1,33 @@
 package UI.ActualPages;
 
-import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
 import Innates.Attribute;
 import Innates.TotalAbility;
 import Settings.WriteReadCharacter;
 import UI.ActualPages.CommonPages.ConfirmationPage;
-import UI.BulkText;
 import UI.Input;
 import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
-import UI.PageMethods;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class CharacterPage implements InteractivePage {
-    private final PageOption[] pageActions = new PageOption[5];
+    private final ArrayList<PageOption> pageActions = new ArrayList<>();
     private String menu = "";
     private Actor activeCharacter;
     private Path saveLocation;
 
     public CharacterPage(Path saveLocation){
         this.saveLocation = saveLocation;
-        this.pageActions[0] = new PageOption(1,"Random Stats - Random Name", () -> true);
-        this.pageActions[1] = new PageOption(2,"Random  Stats - Custom Name", () -> true);
-        this.pageActions[2] = new PageOption(3,"Custom Stats - Random Name", () -> true);
-        this.pageActions[3] = new PageOption(4,"Custom Stats - Custom Name", () -> true);
-        this.pageActions[4] = new PageOption(9,"Return", () -> true);
+        pageActions.add(new PageOption(1,"Random Stats - Random Name", this::createAllRandom));
+        pageActions.add(new PageOption(2,"Random  Stats - Custom Name", this::createRandomStatsCustomName));
+        pageActions.add(new PageOption(3,"Custom Stats - Random Name", this::createCustomStatsRandomName));
+        pageActions.add(new PageOption(4,"Custom Stats - Custom Name", this::createAllCustom));
+        setPageOptions(pageActions);
 
         this.menu = MenuFactory.makeMenu(
                 "What kind of character do you want to make?",
@@ -50,7 +48,7 @@ public class CharacterPage implements InteractivePage {
     }
 
     @Override
-    public PageOption[] getPageActions() {
+    public ArrayList<PageOption> getPageActions() {
         return pageActions;
     }
 
@@ -60,58 +58,8 @@ public class CharacterPage implements InteractivePage {
     }
 
     @Override
-    public boolean runPage() {
-        boolean isOn = true;
-
-        System.out.println(getMenu());
-
-        switch (chosenOption(Input.readInt())) {
-            case (1) -> {
-                setActiveCharacter(ActorGeneration.createChar());
-            }
-            case (2) -> {
-                setActiveCharacter(
-                        ActorGeneration.createChar(
-                            Input.getVariableString("Name")
-                    )
-                );
-            }
-            case (3) -> {
-                setActiveCharacter(ActorGeneration.createChar(
-                        generateUserAttribute("Health"),
-                        generateUserAttribute("Stamina"),
-                        generateUserAbility("Strength"),
-                        generateUserAbility("Knowledge"),
-                        generateUserAbility("Willpower")
-
-                    )
-                );
-            }
-            case (4) -> {
-                setActiveCharacter(
-                        ActorGeneration.createChar(
-                                Input.getVariableString("name"),
-                                generateUserAttribute("Health"),
-                                generateUserAttribute("Stamina"),
-                                generateUserAbility("Strength"),
-                                generateUserAbility("Knowledge"),
-                                generateUserAbility("Willpower")
-                        )
-                );
-            }
-            case (9) -> {
-                isOn = exit();
-            }
-        }
-
-        if (getActiveCharacter()!=null){
-            System.out.println(printGeneratedChar(getActiveCharacter().toString()));
-            if (checkSave()){
-                saveActor(getActiveCharacter(), getSaveLocation());
-            }
-        }
-
-        return isOn;
+    public String getActionTitle() {
+        return "Create a character";
     }
 
     public String printGeneratedChar(String charStats){
@@ -128,8 +76,12 @@ public class CharacterPage implements InteractivePage {
     }
 
     public boolean checkSave(){
+        System.out.println(printGeneratedChar(getActiveCharacter().toString()));
         ConfirmationPage confirmationPage = new ConfirmationPage("save character");
-        return confirmationPage.runPage();
+        if(confirmationPage.startPage()){
+            saveActor(getActiveCharacter(),getSaveLocation());
+        }
+        return true;
     }
 
     public Attribute generateUserAttribute(String name){
@@ -145,4 +97,45 @@ public class CharacterPage implements InteractivePage {
                 Input.getVariableInt(String.format("%s score", name)));
     }
 
+    public Boolean createAllRandom(){
+        setActiveCharacter(ActorGeneration.createChar());
+        return checkSave();
+    }
+
+    public Boolean createRandomStatsCustomName(){
+        setActiveCharacter(
+                ActorGeneration.createChar(
+                        Input.getVariableString("Name")
+                )
+        );
+        return checkSave();
+    }
+
+    public Boolean createCustomStatsRandomName(){
+        setActiveCharacter(
+                ActorGeneration.createChar(
+                        Input.getVariableString("name"),
+                        generateUserAttribute("Health"),
+                        generateUserAttribute("Stamina"),
+                        generateUserAbility("Strength"),
+                        generateUserAbility("Knowledge"),
+                        generateUserAbility("Willpower")
+                )
+        );
+        return checkSave();
+    }
+
+    public Boolean createAllCustom(){
+        setActiveCharacter(
+                ActorGeneration.createChar(
+                        Input.getVariableString("name"),
+                        generateUserAttribute("Health"),
+                        generateUserAttribute("Stamina"),
+                        generateUserAbility("Strength"),
+                        generateUserAbility("Knowledge"),
+                        generateUserAbility("Willpower")
+                )
+        );
+        return checkSave();
+    }
 }

@@ -49,15 +49,4 @@ public class OpeningPage implements InteractivePage {
     public String getActionTitle() {
         return null;
     }
-
-    @Override
-    public boolean startPage() {
-        boolean isOn = true;
-        while(isOn){
-            System.out.println(getMenu());
-            isOn = running(getPageActions());
-        }
-        return false;
-    }
-
 }

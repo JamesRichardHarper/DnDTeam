@@ -17,6 +17,7 @@ public class SettingsPage implements InteractivePage {
     public SettingsPage(Options settings) {
         this.settings = settings;
         pageActions.add(new PageOption(1,"Change Save Location", () -> updateSetting(settings)));
+        setPageOptions(pageActions);
 
         this.menu = MenuFactory.makeMenu(
                 "Settings Menu",
@@ -48,15 +49,5 @@ public class SettingsPage implements InteractivePage {
     @Override
     public String getActionTitle() {
         return "Settings";
-    }
-
-    @Override
-    public boolean startPage() {
-        boolean isOn = true;
-        System.out.println(getMenu());
-        while(isOn){
-            isOn = running(getPageActions());
-        }
-        return false;
     }
 }

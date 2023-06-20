@@ -38,14 +38,18 @@ public class ConfirmationPage implements InteractivePage {
 
     @Override
     public boolean startPage() {
-        boolean isOn = true;
-        boolean confirm = false;
-
+        boolean validInput = false;
+        boolean answer = false;
         System.out.println(getMenu());
-
-        while(isOn){
-            isOn = running(getPageActions());
+        PageOption chosenOne;
+        /*return running(getPageActions());*/
+        while(!validInput) {
+            chosenOne = returnInput(getPageActions(), Input.readInt());
+            answer = chosenOne.getAction().get();
+            if (chosenOne.getNumberInput()!=0){
+                validInput = true;
+            }
         }
-        return confirm;
+        return answer;
     }
 }

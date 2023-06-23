@@ -8,6 +8,9 @@ public class PageOption {
     int numberInput;
     String actionText;
     Supplier<Boolean> action;
+    /*
+    Can swap the supplier with a generic T later on, but remember to put a <T> just after PageOption
+     */
 
     public PageOption(int numberInput, String actionText, Supplier<Boolean> action) {
         this.numberInput = numberInput;

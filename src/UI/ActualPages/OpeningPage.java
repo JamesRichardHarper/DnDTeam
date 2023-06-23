@@ -1,24 +1,19 @@
 package UI.ActualPages;
 
-import BattleClasses.FightBattle;
-import CharacterClasses.Actor;
-import CharacterClasses.ActorGeneration;
 import Settings.Options;
-import UI.Input;
 import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
+import org.w3c.dom.ls.LSOutput;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class OpeningPage implements InteractivePage {
     private final Options settings = new Options();
     private String menu = "";
     private final InteractivePage[] pages = {
+            new PlayPage(Paths.get(getSettings().getSetting("Save_Location"))),
             new CharacterPage(Paths.get(getSettings().getSetting("Save_Location"))),
             new SettingsPage(getSettings())
     };
@@ -48,5 +43,11 @@ public class OpeningPage implements InteractivePage {
     @Override
     public String getActionTitle() {
         return null;
+    }
+
+    @Override
+    public boolean exit() {
+        System.out.println("Goodbye!");
+        return false;
     }
 }

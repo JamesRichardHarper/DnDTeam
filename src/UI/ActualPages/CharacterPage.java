@@ -2,8 +2,8 @@ package UI.ActualPages;
 
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
-import Innates.Attribute;
-import Innates.TotalAbility;
+import CharacterInnates.Attribute;
+import CharacterInnates.TotalAbility;
 import Settings.WriteReadCharacter;
 import UI.ActualPages.CommonPages.ConfirmationPage;
 import UI.Input;

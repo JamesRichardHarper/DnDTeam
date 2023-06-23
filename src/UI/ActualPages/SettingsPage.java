@@ -13,7 +13,6 @@ public class SettingsPage implements InteractivePage {
     private String menu = "";
     private Options settings;
 
-
     public SettingsPage(Options settings) {
         this.settings = settings;
         pageActions.add(new PageOption(1,"Change Save Location", () -> updateSetting(settings)));

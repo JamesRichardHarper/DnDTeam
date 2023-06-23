@@ -1,4 +1,4 @@
-package Innates;
+package CharacterInnates;
 
 public class TotalAbility extends AbilityModifier{
     String name;

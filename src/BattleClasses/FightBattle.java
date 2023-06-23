@@ -32,11 +32,11 @@ public class FightBattle {
                         "VS. \n" +
                 playerTwo.getName() + " (" + playerTwo.getHealth().getModifiedAbilityScore() + ")\n");
 
-        while(fightOngoing){
+        while(getFightOngoing()){
             Round round = new Round(playerOne, playerTwo);
             setFightOngoing(round.determineRoundResult(playerOne,playerTwo));
 
-            totalRounds.add(round);
+            getTotalRounds().add(round);
 
             System.out.println(
                     playerOne.getName() + "(" + playerOne.getHealth().getModifiedAbilityScore() + ") dealt " +
@@ -44,8 +44,8 @@ public class FightBattle {
                     playerTwo.getName() + "(" + playerTwo.getHealth().getModifiedAbilityScore() + ") dealt " +
                     round.getPlayerTwoBaseDamage() + "(x" + round.getPlayerTwoMultiplier() + ")\n");
 
-            if(totalRounds.size() > 20){
-                fightOngoing = false;
+            if(getTotalRounds().size() > 20){
+                setFightOngoing(false);
             }
         }
         //totalRounds.forEach( finishedRound -> System.out.println(finishedRound.toString()));

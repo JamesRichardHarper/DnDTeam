@@ -1,7 +1,7 @@
 package CharacterClasses;
 
-import Innates.Attribute;
-import Innates.TotalAbility;
+import CharacterInnates.Attribute;
+import CharacterInnates.TotalAbility;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,6 +20,10 @@ public class Actor {
     TotalAbility strength;
     TotalAbility knowledge;
     TotalAbility willpower;
+
+    public Actor(){
+        super();
+    }
 
     public Actor(String name,
                  Attribute health,

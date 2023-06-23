@@ -1,4 +1,4 @@
-package Innates;
+package CharacterInnates;
 
 public abstract class AbilityModifier extends AbilityScore{
 

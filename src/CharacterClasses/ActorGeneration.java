@@ -1,7 +1,7 @@
 package CharacterClasses;
 
-import Innates.Attribute;
-import Innates.TotalAbility;
+import CharacterInnates.Attribute;
+import CharacterInnates.TotalAbility;
 
 import java.util.Arrays;
 import java.util.Random;

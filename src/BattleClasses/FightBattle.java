@@ -7,7 +7,22 @@ import java.util.ArrayList;
 public class FightBattle {
 
     Boolean fightOngoing = true;
+    Actor playerOne;
+    Actor playerTwo;
     ArrayList<Round> totalRounds = new ArrayList<>();
+
+    public FightBattle(Actor playerOne, Actor playerTwo){
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+    }
+
+    public Actor getPlayerOne() {
+        return playerOne;
+    }
+
+    public Actor getPlayerTwo() {
+        return playerTwo;
+    }
 
     public Boolean getFightOngoing() {
         return fightOngoing;
@@ -25,23 +40,23 @@ public class FightBattle {
         this.totalRounds = totalRounds;
     }
 
-    public void beginFight(Actor playerOne, Actor playerTwo){
+    public void beginFight(){
         System.out.println(
                 "Welcome to battle. \n" +
-                "Today we have:\n" + playerOne.getName() + " (" + playerOne.getHealth().getModifiedAbilityScore() + ")\n" +
+                "Today we have:\n" + getPlayerOne().getName() + " (" + getPlayerOne().getHealth().getModifiedAbilityScore() + ")\n" +
                         "VS. \n" +
-                playerTwo.getName() + " (" + playerTwo.getHealth().getModifiedAbilityScore() + ")\n");
+                getPlayerTwo().getName() + " (" + getPlayerTwo().getHealth().getModifiedAbilityScore() + ")\n");
 
         while(getFightOngoing()){
-            Round round = new Round(playerOne, playerTwo);
-            setFightOngoing(round.determineRoundResult(playerOne,playerTwo));
+            Round round = new Round(getPlayerOne(), getPlayerTwo());
+            setFightOngoing(round.determineRoundResult(getPlayerOne(),getPlayerTwo()));
 
             getTotalRounds().add(round);
 
             System.out.println(
-                    playerOne.getName() + "(" + playerOne.getHealth().getModifiedAbilityScore() + ") dealt " +
+                    getPlayerOne().getName() + "(" + getPlayerOne().getHealth().getModifiedAbilityScore() + ") dealt " +
                     round.getPlayerOneBaseDamage() + "(x" + round.getPlayerOneMultiplier() + ") " + "\n" +
-                    playerTwo.getName() + "(" + playerTwo.getHealth().getModifiedAbilityScore() + ") dealt " +
+                            getPlayerTwo().getName() + "(" + getPlayerTwo().getHealth().getModifiedAbilityScore() + ") dealt " +
                     round.getPlayerTwoBaseDamage() + "(x" + round.getPlayerTwoMultiplier() + ")\n");
 
             if(getTotalRounds().size() > 20){

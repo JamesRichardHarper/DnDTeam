@@ -26,12 +26,22 @@ public class SettingsPage implements InteractivePage {
                 pageActions);
     }
 
+    public void setMenu() {
+        this.menu = MenuFactory.makeMenu(
+                "Settings Menu",
+                String.format("""
+                            Save Location: %s
+                            """, settings.getSetting("Save_Location")),
+                getPageActions());
+    }
+
     public Options getSettings() {
         return settings;
     }
 
     public boolean updateSetting(Options settings){
         settings.updateSetting("Save_Location", Input.getVariableString("save location"));
+        setMenu();
         return true;
     }
 

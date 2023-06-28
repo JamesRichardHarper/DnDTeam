@@ -1,6 +1,8 @@
 package UI.ActualPages;
 
+import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
+import CharacterClasses.ActorGeneration;
 import Settings.Options;
 import Settings.WriteReadCharacter;
 import UI.ActualPages.CommonPages.TextBox;
@@ -24,7 +26,7 @@ public class PlayPage implements InteractivePage {
 
     public PlayPage(Path saveLocation) {
         this.saveLocation = saveLocation;
-        pageActions.add(new PageOption(1,"Battle!", () -> true));
+        pageActions.add(new PageOption(1,"Battle!", this::playGame));
         pageActions.add(new PageOption(2,"Load a character", this::canLoadActor));
         setPageOptions(pageActions);
 
@@ -36,12 +38,22 @@ public class PlayPage implements InteractivePage {
                 pageActions);
     }
 
+    public void setMenu(){
+        this.menu = MenuFactory.makeMenu(
+                """
+                        Welcome!
+                        What is it you wish to do?""",
+                new TextBox(actorSummary(getActiveCharacter())).getFinalText(),
+                pageActions);
+    }
+
     public Actor getActiveCharacter() {
         return activeCharacter;
     }
 
     public void setActiveCharacter(Actor activeCharacter) {
         this.activeCharacter = activeCharacter;
+        setMenu();
     }
 
     public Path getSaveLocation() {
@@ -64,6 +76,7 @@ public class PlayPage implements InteractivePage {
             return false;
         }
         else{
+            loadedActor.setPlayerControlled(true);
             setActiveCharacter(loadedActor);
             System.out.println("Character Loaded!");
             return true;
@@ -72,7 +85,17 @@ public class PlayPage implements InteractivePage {
 
     public Actor loadActor(Path saveLocation){
         String characterToLoad = Input.getVariableString("name of the character");
-        return WriteReadCharacter.unpackActor(saveLocation.resolve(Path.of(characterToLoad)).toString());
+        return (WriteReadCharacter.unpackActor(saveLocation.resolve(Path.of(characterToLoad)).toString()));
+    }
+
+    public boolean playGame(){
+        Actor playerOne = ActorGeneration.createChar();
+        Actor playerTwo = ActorGeneration.createChar();
+
+        FightBattle fightBattle = new FightBattle(playerOne, playerTwo);
+        fightBattle.beginFight();
+
+        return true;
     }
 
     @Override

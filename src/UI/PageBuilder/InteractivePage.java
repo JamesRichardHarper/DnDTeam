@@ -1,4 +1,5 @@
 package UI.PageBuilder;
+import Settings.Options;
 import UI.Input;
 
 import java.util.ArrayList;
@@ -70,6 +71,21 @@ public interface InteractivePage {
     default boolean validChoice(PageOption chosenOne){
         return chosenOne.getNumberInput() != 0;
     }
+
+    /*
+
+    this.menu = MenuFactory.makeMenu(
+                "Settings Menu",
+                String.format("""
+                            Save Location: %s
+                            """, settings.getSetting("Save_Location")),
+                pageActions);
+
+     */
+
+    /*default String returnMenu(String title, String subTitle, Options pageOptions){
+
+    }*/
 
     default boolean exit(){
         System.out.println("Returning");

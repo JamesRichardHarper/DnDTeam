@@ -20,7 +20,7 @@ public class WriteReadCharacter {
     }
 
     public static Actor unpackActor(String input){
-        try(InputStream inputStream = new FileInputStream( input )){
+        try(InputStream inputStream = new FileInputStream( input + getCharFileName() )){
             return mapper.readValue(inputStream, Actor.class);
         }catch(Exception exception){
             exception.printStackTrace();
@@ -29,7 +29,11 @@ public class WriteReadCharacter {
     }
 
     public static Path getCharFileName(Actor userActor){
-        return Paths.get(String.format("%1$s.json",userActor.getName()));
+        return Paths.get(String.format("%1$s%2$s",userActor.getName(),getCharFileName()));
+    }
+
+    public static Path getCharFileName(){
+        return Paths.get(".json");
     }
 
     public static String getTotalPath(Path location, Path fileName){

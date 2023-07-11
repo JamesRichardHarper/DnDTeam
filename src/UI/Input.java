@@ -37,8 +37,7 @@ public class Input {
 
     public static String printCustomVariableNeeded(String variableNeeded){
         return String.format("""
-                Please enter the %s wanted.
-                """,
+                Please enter the %s wanted.""",
                 variableNeeded);
     }
 }

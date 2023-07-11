@@ -1,4 +1,4 @@
-package Innates;
+package CharacterInnates;
 
 public class Attribute extends AbilityScore{
     String name;

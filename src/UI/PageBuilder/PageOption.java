@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class PageOption {
+public class PageOption{
     int numberInput;
     String actionText;
     Supplier<Boolean> action;
@@ -26,7 +26,7 @@ public class PageOption {
         return actionText;
     }
 
-    public Supplier<Boolean> getAction(){ return action ;}
+    public Supplier<Boolean> getAction(){ return action;}
 
 
 }

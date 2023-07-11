@@ -1,6 +1,7 @@
 package BattleClasses;
 
 import CharacterClasses.Actor;
+import CharacterInnates.TotalAbility;
 
 public class Round {
     Actor playerOne;
@@ -10,17 +11,19 @@ public class Round {
     double playerOneMultiplier;
     double playerTwoMultiplier;
 
+    boolean isAPlayerAlive = false;
+
     public Round(Actor playerOne, Actor playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
+    }
 
-        //playerOne.attackWithStat();
-        //playerTwo.attackWithStat();
+    public Actor getPlayerOne() {
+        return playerOne;
+    }
 
-        this.playerOneBaseDamage = playerOne.attackWithStat().getModifiedAbilityModifier();
-        this.playerTwoBaseDamage = playerTwo.attackWithStat().getModifiedAbilityModifier();
-        this.playerOneMultiplier = getMultiplier(playerTwo.getActiveStat().getName(), playerOne.getActiveStat().getName());
-        this.playerTwoMultiplier = getMultiplier(playerOne.getActiveStat().getName(), playerTwo.getActiveStat().getName());
+    public Actor getPlayerTwo() {
+        return playerTwo;
     }
 
     public int getPlayerOneBaseDamage() {
@@ -39,13 +42,83 @@ public class Round {
         return playerTwoMultiplier;
     }
 
+    public boolean getIsAPlayerAlive() {
+        return isAPlayerAlive;
+    }
+
+    public void setPlayerOneBaseDamage(int playerOneBaseDamage) {
+        this.playerOneBaseDamage = playerOneBaseDamage;
+    }
+
+    public void setPlayerTwoBaseDamage(int playerTwoBaseDamage) {
+        this.playerTwoBaseDamage = playerTwoBaseDamage;
+    }
+
+    public void setPlayerOneMultiplier(double playerOneMultiplier) {
+        this.playerOneMultiplier = playerOneMultiplier;
+    }
+
+    public void setPlayerTwoMultiplier(double playerTwoMultiplier) {
+        this.playerTwoMultiplier = playerTwoMultiplier;
+    }
+
+    public void setAPlayerAlive(boolean APlayerAlive) {
+        isAPlayerAlive = APlayerAlive;
+    }
+
+    //Used for two "AIs"
+    public void calculateRound(){
+        /*setPlayerOneBaseDamage(getPlayerOne().attackWithStat().getModifiedAbilityModifier());
+        setPlayerTwoBaseDamage(getPlayerTwo().attackWithStat().getModifiedAbilityModifier());
+        setPlayerOneMultiplier(calculateRelativeMultiplier(getPlayerTwo().getActiveStat().getName(), getPlayerOne().getActiveStat().getName()));
+        setPlayerTwoMultiplier(calculateRelativeMultiplier(getPlayerOne().getActiveStat().getName(), getPlayerTwo().getActiveStat().getName()));
+        setAPlayerDead(determineRoundResult(getPlayerOne(), getPlayerTwo()));*/
+
+        calculateRound(getPlayerOne().returnRandomAbility().getName(),getPlayerTwo().returnRandomAbility().getName());
+    }
+
+    public void calculateRound(String humanStat){
+        if(getPlayerOne().getPlayerControlled()){
+            calculateRound(humanStat, getPlayerTwo().returnRandomAbility().getName());
+        }
+        else{
+            calculateRound(getPlayerOne().returnRandomAbility().getName(), humanStat);
+        }
+    }
+
+    //Used for two human Players
+    public void calculateRound(String playerOneStat, String playerTwoStat){
+        setPlayerOneBaseDamage(getPlayerOne().attackWithStat(
+                getPlayerOne().getStatName(
+                        playerOneStat)
+                ).getModifiedAbilityModifier()
+        );
+        setPlayerTwoBaseDamage(
+                getPlayerTwo().attackWithStat(
+                        getPlayerTwo().getStatName(
+                                playerTwoStat)
+                ).getModifiedAbilityModifier()
+        );
+        setPlayerOneMultiplier(
+                setPlayerMultiplier(getPlayerOne().getActiveStat(), getPlayerTwo().getActiveStat())
+        );
+        setPlayerTwoMultiplier(
+                setPlayerMultiplier(getPlayerTwo().getActiveStat(), getPlayerTwo().getActiveStat())
+        );
+        setAPlayerAlive(determineRoundResult(getPlayerOne(), getPlayerTwo()));
+    }
+
+    public double setPlayerMultiplier(TotalAbility attackedAttribute, TotalAbility attackerAttribute){
+        return calculateRelativeMultiplier(attackedAttribute.getName(), attackerAttribute.getName());
+    }
+
     public Boolean determineRoundResult(Actor playerOne, Actor playerTwo){
         playerOne.takeDamage((int) (getPlayerTwoBaseDamage()*getPlayerTwoMultiplier()));
         playerTwo.takeDamage((int) (getPlayerOneBaseDamage()*getPlayerOneMultiplier()));
         return playerNotDead(playerOne.getAlive(), playerTwo.getAlive());
     }
 
-    public double getMultiplier(String attackedAbility, String attackerAbility){
+    public double calculateRelativeMultiplier(String attackedAbility, String attackerAbility){
         double effectiveAttack = 1.5;
         double ineffectiveAttack = 0.5;
 

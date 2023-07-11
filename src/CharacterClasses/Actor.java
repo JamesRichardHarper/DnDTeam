@@ -108,6 +108,16 @@ public class Actor {
     //Attack Methods
     //Set attacking stat
     //Send Stat used
+    public TotalAbility getStatName(String stat){
+        TotalAbility abilityUsed = null;
+        switch (stat){
+            case "Strength" -> abilityUsed = getStrength();
+            case "Knowledge" -> abilityUsed = getKnowledge();
+            case "Willpower" -> abilityUsed = getWillpower();
+        }
+        return  abilityUsed;
+    }
+
     public TotalAbility attackWithStat(TotalAbility statUsed){
         setActiveStat(statUsed);
         return statUsed;

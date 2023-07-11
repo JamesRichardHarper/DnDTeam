@@ -1,10 +1,11 @@
-package UI.ActualPages;
+package UI.ActualPages.FightingPages;
 
 import BattleClasses.FightBattle;
 import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
 import Settings.Options;
 import Settings.WriteReadCharacter;
+import UI.ActualPages.CommonPages.ConfirmationPage;
 import UI.ActualPages.CommonPages.TextBox;
 import UI.Input;
 import UI.PageBuilder.InteractivePage;
@@ -89,12 +90,23 @@ public class PlayPage implements InteractivePage {
     }
 
     public boolean playGame(){
-        Actor playerOne = ActorGeneration.createChar();
+        Actor playerOne;
         Actor playerTwo = ActorGeneration.createChar();
-
+        ConfirmationPage confirmationPage = new ConfirmationPage("play with a loaded character");
+        if(getActiveCharacter() == null){
+            playerOne = ActorGeneration.createChar();
+        }
+        else{
+            if(confirmationPage.startPage()){
+                getActiveCharacter().setPlayerControlled(true);
+                playerOne = getActiveCharacter();
+            }
+            else{
+                playerOne = ActorGeneration.createChar();
+            }
+        }
         FightBattle fightBattle = new FightBattle(playerOne, playerTwo);
         fightBattle.beginFight();
-
         return true;
     }
 

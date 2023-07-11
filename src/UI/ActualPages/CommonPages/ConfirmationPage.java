@@ -34,6 +34,6 @@ public class ConfirmationPage implements SingleUsePage {
 
     @Override
     public String getActionTitle() {
-        return null;
+        return "Confirmation Page";
     }
 }

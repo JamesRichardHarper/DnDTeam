@@ -1,6 +1,7 @@
 package BattleClasses;
 
 import CharacterClasses.Actor;
+import UI.ActualPages.CommonPages.AttackOptions;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,24 @@ public class FightBattle {
 
         while(getFightOngoing()){
             Round round = new Round(getPlayerOne(), getPlayerTwo());
-            setFightOngoing(round.determineRoundResult(getPlayerOne(),getPlayerTwo()));
+            boolean validAttack = false;
+            if (getPlayerOne().getPlayerControlled() && !getPlayerTwo().getPlayerControlled() ||
+                !getPlayerOne().getPlayerControlled() && getPlayerTwo().getPlayerControlled()
+                ){
+                AttackOptions attackOptions = new AttackOptions();
+                //Need to figure otu a way for this to continue going through the while loop while it finds a valid answer
+                while(!validAttack){
+                    validAttack = attackOptions.startPage();
+                    round.calculateRound(attackOptions.getStat());
+                }
+            } else if (getPlayerOne().getPlayerControlled() && getPlayerTwo().getPlayerControlled()) {
+                AttackOptions attackOptionsPlayerOne = new AttackOptions();
+                AttackOptions attackOptionsPlayerTwo = new AttackOptions();
+                round.calculateRound(attackOptionsPlayerOne.getStat(), attackOptionsPlayerTwo.getStat());
+            } else {
+                round.calculateRound();
+            }
+            setFightOngoing(round.getIsAPlayerAlive());
 
             getTotalRounds().add(round);
 

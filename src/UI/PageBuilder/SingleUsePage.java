@@ -2,8 +2,9 @@ package UI.PageBuilder;
 
 import UI.Input;
 
-public interface SingleUsePage extends InteractivePage{
+import java.util.ArrayList;
 
+public interface SingleUsePage extends InteractivePage {
     @Override
     default boolean startPage() {
         boolean validInput = false;

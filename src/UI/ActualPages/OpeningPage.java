@@ -10,11 +10,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class OpeningPage implements InteractivePage {
-    private final Options settings = new Options();
+    private Options settings = new Options();
     private String menu = "";
     private final InteractivePage[] pages = {
-            new PlayPage(Paths.get(getSettings().getSetting("Save_Location"))),
-            new CharacterPage(Paths.get(getSettings().getSetting("Save_Location"))),
+            new PlayPage(getSettings()),
+            new CharacterPage(getSettings()),
             new SettingsPage(getSettings())
     };
     private ArrayList<PageOption> pageActions;

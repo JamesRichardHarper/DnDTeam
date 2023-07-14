@@ -4,6 +4,7 @@ import CharacterClasses.Actor;
 import CharacterClasses.ActorGeneration;
 import CharacterInnates.Attribute;
 import CharacterInnates.TotalAbility;
+import Settings.Options;
 import Settings.WriteReadCharacter;
 import UI.ActualPages.CommonPages.ConfirmationPage;
 import UI.Input;
@@ -19,10 +20,10 @@ public class CharacterPage implements InteractivePage {
     private final ArrayList<PageOption> pageActions = new ArrayList<>();
     private String menu = "";
     private Actor activeCharacter;
-    private Path saveLocation;
+    private Options settings;
 
-    public CharacterPage(Path saveLocation){
-        this.saveLocation = saveLocation;
+    public CharacterPage(Options settings){
+        this.settings = settings;
         pageActions.add(new PageOption(1,"Random Stats - Random Name", this::createAllRandom));
         pageActions.add(new PageOption(2,"Random  Stats - Custom Name", this::createRandomStatsCustomName));
         pageActions.add(new PageOption(3,"Custom Stats - Random Name", this::createCustomStatsRandomName));
@@ -37,7 +38,7 @@ public class CharacterPage implements InteractivePage {
                 pageActions);
     }
 
-    public Path getSaveLocation(){ return saveLocation;}
+    public Options getSettings(){return settings;}
 
     public Actor getActiveCharacter() {
         return activeCharacter;
@@ -79,7 +80,7 @@ public class CharacterPage implements InteractivePage {
         System.out.println(printGeneratedChar(getActiveCharacter().toString()));
         ConfirmationPage confirmationPage = new ConfirmationPage("save character");
         if(confirmationPage.startPage()){
-            saveActor(getActiveCharacter(),getSaveLocation());
+            saveActor(getActiveCharacter(), Paths.get(getSettings().getSetting("Save_Location")));
         }
         return true;
     }

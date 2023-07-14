@@ -118,6 +118,7 @@ public class Round {
         return playerNotDead(playerOne.getAlive(), playerTwo.getAlive());
     }
 
+    //Note for later about inverted damage, just use a reciprocal
     public double calculateRelativeMultiplier(String attackedAbility, String attackerAbility){
         double effectiveAttack = 1.5;
         double ineffectiveAttack = 0.5;

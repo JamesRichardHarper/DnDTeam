@@ -6,6 +6,8 @@ import UI.PageBuilder.InteractivePage;
 import UI.PageBuilder.MenuFactory;
 import UI.PageBuilder.PageOption;
 
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class SettingsPage implements InteractivePage {
@@ -40,7 +42,14 @@ public class SettingsPage implements InteractivePage {
     }
 
     public boolean updateSetting(Options settings){
-        settings.updateSetting("Save_Location", Input.getVariableString("save location"));
+        String initialPath = Input.getVariableString("save location").trim();
+        try{
+            Paths.get(initialPath);
+            settings.updateSetting("Save_Location", initialPath);
+        }catch(InvalidPathException exception){
+            System.out.println("Can't save new location due to: " + exception.getReason());
+            return false;
+        }
         setMenu();
         return true;
     }

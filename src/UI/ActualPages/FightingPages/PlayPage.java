@@ -20,13 +20,10 @@ public class PlayPage implements InteractivePage {
     private final ArrayList<PageOption> pageActions = new ArrayList<>();
     private String menu = "";
     private Actor activeCharacter;
-    private Path saveLocation;
-    /*private final InteractivePage[] pages = {
-            new CharacterPage()
-    };*/
+    private Options settings;
 
-    public PlayPage(Path saveLocation) {
-        this.saveLocation = saveLocation;
+    public PlayPage(Options settings) {
+        this.settings = settings;
         pageActions.add(new PageOption(1,"Battle!", this::playGame));
         pageActions.add(new PageOption(2,"Load a character", this::canLoadActor));
         setPageOptions(pageActions);
@@ -38,6 +35,8 @@ public class PlayPage implements InteractivePage {
                 new TextBox(actorSummary(activeCharacter)).getFinalText(),
                 pageActions);
     }
+
+    public Options getSettings(){return settings;}
 
     public void setMenu(){
         this.menu = MenuFactory.makeMenu(
@@ -57,10 +56,6 @@ public class PlayPage implements InteractivePage {
         setMenu();
     }
 
-    public Path getSaveLocation() {
-        return saveLocation;
-    }
-
     public String actorSummary(Actor actor){
         if(actor == null){
             return "No active character!";
@@ -71,7 +66,7 @@ public class PlayPage implements InteractivePage {
     }
 
     public boolean canLoadActor(){
-        Actor loadedActor = loadActor(getSaveLocation());
+        Actor loadedActor = loadActor(Paths.get(getSettings().getSetting("Save_Location")));
         if (loadedActor == null){
             System.out.println("No Character Found!");
             return false;
